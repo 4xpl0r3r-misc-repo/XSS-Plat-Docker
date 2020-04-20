@@ -27,7 +27,8 @@
         <h2>学生信息</h2>
     </div>
     <div class="card-body">
-      <table style="width: 100%;" class="table table-hover nowrap">
+      <div v-if="data.length === 0">无学生</div>
+      <table v-if="data.length > 0" style="width: 100%;" class="table table-hover nowrap">
         <thead>
           <tr>
             <th v-for="key in Object.keys(alias)">{{ alias[key] }}</th>

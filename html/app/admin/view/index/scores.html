@@ -27,7 +27,8 @@
         <h2>学生成绩</h2>
     </div>
     <div class="card-body">
-      <div id="chart" class="hoverable-data-table" style="margin-bottom: 25px; background-color: white;">
+      <div v-if="data.length === 0">无学生</div>
+      <div v-if="data.length > 0" id="chart" class="hoverable-data-table" style="margin-bottom: 25px; background-color: white;">
         <table class="table table-hover nowrap" style="width:100%;">
           <thead>
             <tr>
@@ -68,7 +69,7 @@
       axios.post("/admin/getAllExamScore").then(res => {
         if (res.status === 200 && res.data.status) {
           this.status += 0.5;
-          this.data = res.data.data;
+          this.data = res.data.data.filter(a => a.uid !== 1);
         }
         else {
           this.status = -1;
@@ -78,7 +79,6 @@
         if (res.status === 200) {
           this.status += 0.5;
           this.info = res.data.data;
-          this.info.push({uid: 1, username: "系统管理员", realName: "系统管理员"});
         }
         else {
           this.status = -1;

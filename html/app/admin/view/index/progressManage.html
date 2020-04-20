@@ -27,7 +27,8 @@
         <h2>学习进度</h2>
     </div>
     <div class="card-body">
-      <div class="hoverable-data-table" style="margin-bottom: 25px; background-color: white;">
+      <div v-if="data.length === 0">无学生</div>
+      <div v-if="data.length > 0" class="hoverable-data-table" style="margin-bottom: 25px; background-color: white;">
         <table class="table table-hover nowrap" style="width:100%;">
           <thead>
             <tr>
@@ -46,7 +47,7 @@
       </div>
     </div>
   </div>
-  <div v-if="status === 1" class="card card-default" style="height: calc(100% - 24px);">
+  <div v-if="status === 1 && data.length > 0" class="card card-default" style="height: calc(100% - 24px);">
     <div class="card-header card-header-border-bottom">
         <h2>学习时间</h2>
     </div>
@@ -103,7 +104,7 @@
     },
     computed: {
       status: function() {
-        if (this.status1 === 1 && this.status2 === 1 && this.data1.length > 0 && this.data2.length > 0) return 1;
+        if (this.status1 === 1 && this.status2 === 1) return 1;
         else return 0;
       },
       data: function() {

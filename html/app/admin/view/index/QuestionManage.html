@@ -27,7 +27,8 @@
         <h2>测试题目</h2>
     </div>
     <div class="card-body">
-      <div class="hoverable-data-table" style="margin-bottom: 25px;">
+      <div v-if="data.length === 0">无题目</div>
+      <div v-if="data.length > 0" class="hoverable-data-table" style="margin-bottom: 25px;">
         <table style="width: 100%;" class="table table-hover nowrap">
           <thead>
             <tr>
