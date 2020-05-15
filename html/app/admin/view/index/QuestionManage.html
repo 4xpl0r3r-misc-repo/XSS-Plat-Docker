@@ -1,0 +1,151 @@
+<div class="content" id="app">
+  <div class="breadcrumb-wrapper">
+    <h1>测试题目管理</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb p-0">
+            <li class="breadcrumb-item">
+              <span class="mdi mdi-home"></span>
+            </li>
+            <li class="breadcrumb-item">
+                平台管理
+            </li>
+            <li class="breadcrumb-item" aria-current="page">
+              测试题目管理
+            </li>
+        </ol>
+    </nav>
+  </div>
+  <div v-if="status !== 1" class="sk-wave">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+    <div class="rect5"></div>
+  </div>
+  <div v-if="status === 1" class="card card-default" style="height: calc(100% - 24px);">
+    <div class="card-header card-header-border-bottom">
+        <h2>测试题目</h2>
+    </div>
+    <div class="card-body">
+      <div class="hoverable-data-table" style="margin-bottom: 25px;">
+        <table style="width: 100%;" class="table table-hover nowrap">
+          <thead>
+            <tr>
+              <th v-for="key in Object.keys(alias)">{{ alias[key] }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="qitem" v-for="row in this.data">
+              <td v-for="key in Object.keys(alias)">
+                <div v-if="key === 'qid'">{{ row[key] }}</div>
+                <button v-else-if="key === 'delete'" v-on:click="deleteQuestion(row.qid)" type="button" class="btn btn-danger" style="width: 70px;">删除</button>
+                <textarea v-else v-on:change="updateQuestion(row.qid, key, $event)" class="form-control" type="text" :value="row[key]" style="min-width: 100px;"></textarea>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <button v-on:click="addQuestion()" type="button" class="btn btn-primary" style="width: 200px; float: right;">添加新题目</button>
+    </div>
+  </div>
+</div>
+<script>
+  new Vue({
+    el: "#app",
+    data: {
+      status: 0,
+      data: {},
+      alias: {
+        "qid": "序号",
+        "question": "题面",
+        "correctRes": "正确答案",
+        "fakeA": "错误答案A",
+        "fakeB": "错误答案B",
+        "fakeC": "错误答案C",
+        "resDetail": "题目解析",
+        "delete": "删除题目",
+      },
+    },
+    methods: {
+      getQuestion: function() {
+        axios.post("/admin/getAllQuestion").then(res => {
+          if (res.status === 200 && res.data.status) {
+            this.status = 1;
+            this.data = res.data.data;
+          }
+          else {
+            this.status = -1;
+          }
+        });
+      },
+      updateQuestion: function(qid, column, event) {
+        axiosPostFormdata("/admin/updateQuestion", {qid, column, value: event.target.value}).then(res => {
+          if (res.status === 200 && res.data.status) {
+            toastr.success("题目修改成功!");
+            this.getQuestion();
+          }
+          else {
+            toastr.error("题目修改失败!");
+          }
+        });
+      },
+      deleteQuestion: function(qid) {
+        axiosPostFormdata("/admin/deleteQuestion", {qid}).then(res => {
+          if (res.status === 200 && res.data.status) {
+            toastr.success("题目删除成功!");
+            this.getQuestion();
+          }
+          else {
+            toastr.error("题目删除失败!");
+          }
+        });
+      },
+      addQuestion: function() {
+        axiosPostFormdata("/admin/addQuestion", {
+          "question": "新题",
+          "correctRes": "",
+          "fakeA": "",
+          "fakeB": "",
+          "fakeC": "",
+          "resDetail": "",
+        }).then(res => {
+          if (res.status === 200 && res.data.status) {
+            toastr.success("题目添加成功! ");
+            this.getQuestion();
+          }
+          else {
+            toastr.error("题目添加失败!");
+          }
+        });
+      },
+    },
+    computed: {
+      
+    },
+    mounted: function() {
+      this.getQuestion();
+    },
+    updated: function() {
+      
+    },
+  });
+</script>
+<style scoped>
+  #app {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+  }
+  #app>div {
+    width: 95%;
+  }
+  textarea.form-control {
+    resize: none;
+    height: 60px;
+    transition: height .2s ease-in-out;
+  }
+  .qitem:hover .form-control,
+  .qitem .form-control:focus {
+    height: 200px;
+  }
+</style>

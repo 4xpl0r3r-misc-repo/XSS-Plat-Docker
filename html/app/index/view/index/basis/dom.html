@@ -1,0 +1,160 @@
+<div class="content">
+    <div class="breadcrumb-wrapper">
+        <h1>DOM型跨站脚本</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb p-0">
+                <li class="breadcrumb-item">
+                    <a href="/">
+                        <span class="mdi mdi-home"></span>
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    跨站脚本基础
+                </li>
+                <li class="breadcrumb-item" aria-current="page">
+                    DOM型跨站脚本
+                </li>
+            </ol>
+        </nav>
+    </div>
+    <!-- <div class="col-xl-4">
+        <div class="card card-default">
+            <div class="card-header card-header-border-bottom">
+                <h2>界面功能介绍</h2>
+            </div>
+            <div class="card-body">
+
+            </div>
+        </div>
+    </div> -->
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card card-default">
+                        <div class="card-header card-header-border-bottom">
+                            <h2><i class="mdi mdi-comment-question"></i> 什么是DOM？</h2>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                <span class="text-primary">DOM</span>的全称为 <span class="text-primary">Document Object Model</span>,即文档对象模型,DOM通常用于代表在HTML、XHTML和XML中的对象。使用DOM可以允许程序和脚本<span class="text-primary">动态地</span>访问和更新文档的内容、结构和样式。
+                            </p>
+                            <p>
+                                通过JavaScript<span class="text-danger">可以重构整个HTML页面</span>,而要重构页面或者页面中的某个对象,JavaScript就需要知道HTML文档中所有元素的“位置”。而DOM为文档提供了结构化表示,并定义了如何通过脚本来访问文档结构。根据DOM规定,HTML文档中的每个成分都是一个节点。<span class="text-primary">看到这里，你可能知道前面为什么小明看到的网页被篡改了。</span>
+                            </p>
+                            <div class="list-group" style="margin: 2% 5%;">
+                                <a class="list-group-item list-group-item-action active">
+                                    DOM的规定如下
+                                </a>
+                                <a class="list-group-item list-group-item-action">
+                                    ① 整个文档是一个文档节点。
+                                </a>
+                                <a class="list-group-item list-group-item-action">
+                                    ② 每个HTML标签是一个元素节点。
+                                </a>
+                                <a class="list-group-item list-group-item-action">
+                                    ③ 包含在HTML元素中的文本是文本节点。
+                                </a>
+                                <a class="list-group-item list-group-item-action">
+                                    ④ 每个HTML属性是一个属性节点。
+                                </a>
+                                <a class="list-group-item list-group-item-action">
+                                    ⑤ 节点与节点之间都有等级关系。
+                                </a>
+                            </div>
+                            <p>HTML的标签都是一个个节点,而这些节点组成了DOM的整体结构:<span class="text-primary">节点树</span>,如右图所示</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="card card-default">
+                        <div class="card-header card-header-border-bottom">
+                            <h2>
+                                <i class="mdi mdi-cube-send"></i>
+                                样例 2-3
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                简单了解了DOM后,再来看DOM型的XSS就比较简单了。可以发现,DOM本身就代表文档的意思,而<span class="text-primary">基于DOM型的XSS是不需要与服务器端交互的</span>,它只发生在客户端处理数据阶段。在右侧，有一个简单的DOM型XSS漏洞示例。
+                            </p>
+                            <div style="padding-left: 2rem;">
+                                <h4>
+                                    <i class="mdi mdi-auto-fix"></i>
+                                    应用功能
+                                </h4>
+                                <p>
+                                    获取当前URL中锚点的值，并且输出，与普通的反射型XSS漏洞不同，DOM型XSS漏洞的触发不需要后端代码的操作，由JS代码即可触发
+                                </p>
+                                <h4>
+                                    <i class="mdi mdi-ladybug"></i>
+                                    漏洞触发
+                                </h4>
+                                <p>
+                                    在地址栏中将锚点的值改为<code
+                                        class="language-html">&lt;script&gt;alert(&#x27;XSS Attack!&#x27;)&lt;/script&gt;</code>即可触发XSS漏洞，发生弹窗。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-6">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card card-default">
+                        <div class="card-header card-header-border-bottom">
+                            <h2>
+                                <i class="mdi mdi-file-tree"></i>
+                                HTML DOM树
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <img src="/myStatic/img/HTML DOM树.png" style="width: 100%;"></img>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="card card-default">
+                        <div class="card-header card-header-border-bottom">
+                            <h2>代码&操作台 2-3</h2>
+                        </div>
+                        <div class="card-body">
+                            <h4>
+                                <i class="mdi mdi-code-not-equal-variant"></i>
+                                代码
+                            </h4>
+                            <!-- /virtualenv/2-3/ -->
+                            index.htm
+                            <pre><code class="language-php">&lt;script&gt;
+    var temp= document.URL;//获取URL
+    var index=document.URL.indexOf(&quot;#&quot;)+1;
+    var par=temp.substring(index);
+    document. write(decodeURI (par));
+    //输入获取内容
+&lt;/script&gt;</code></pre>
+                            <h4>
+                                <i class="mdi mdi-cube-outline"></i>
+                                虚拟实验操作台<br>
+                            </h4>
+
+                            <a class="btn btn-sm btn-square btn-primary" target="_blank"
+                                href="/virtualenv/2-3/index.htm#第3段">点我进入虚拟环境</a>
+                            <br>
+                            <code class="url-code">URL: /virtualenv/2-3/index.htm#第3段</code>
+                            <br>
+                            <a class="btn btn-sm btn-square btn-danger" target="_blank"
+                                href="/virtualenv/2-3/index.htm#<script>alert('XSS Attack!')</script>">点我触发虚拟环境漏洞</a>
+                            <br>
+                            <code class="url-code">URL: /virtualenv/2-3/index.htm#&lt;script&gt;alert(&#x27;XSS Attack!&#x27;)&lt;/script&gt;</code>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+     - "8888:80" #8888可修改为任意想要开放的端口
+    volumes:
+     - ./html:/app
+     - ./mysql:/var/lib/mysql

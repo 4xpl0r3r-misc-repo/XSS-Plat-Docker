@@ -1,0 +1,74 @@
+<div class="content">
+    <div class="breadcrumb-wrapper">
+        <h1>手工检测</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb p-0">
+                <li class="breadcrumb-item">
+                    <a href="/">
+                        <span class="mdi mdi-home"></span>
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    XSS检测
+                </li>
+                <li class="breadcrumb-item" aria-current="page">
+                    手工检测
+                </li>
+            </ol>
+        </nav>
+    </div>
+    
+    <div class="row">
+        <div class="col-xl-8">
+            <div class="card card-default">
+                <div class="card-header card-header-border-bottom">
+                    <h2 class="text-primary"><i class="mdi mdi-play-box-outline"></i>视频讲解</h2>
+                </div>
+                <div class="card-body" style="height: 100%;">
+                    <video src="myStatic/video/3-1.mp4" style="width: 100%;" controls />
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div class="card card-default">
+                <div class="card-header card-header-border-bottom">
+                    <h2>手工检测XSS的方法</h2>
+                </div>
+                <div class="card-body">
+                    <p>
+                        使用手工检测Web应用程序是否存在XSS漏洞时,最重要的是考虑<span class="text-danger">哪里有输入、输入的数据在什么地方输出</span>。
+                    </p>
+                    <p>
+                        使用手工检测XSS时,一定要选择有特殊意义的字符,这样可以快速测试是否存在XSS比如,测试某输入框是否存在XSS漏洞时,不要直接输入XSS跨站语句测试,应一步一步地进行,这样更有利于测试。
+                    </p>
+                    <h4>
+                        <i class="mdi mdi-rhombus-medium"></i>
+                        可得知输出位置
+                    </h4>
+                    <p>
+                        输入一些敏感字符,例如“<span class="text-primary">&lt;、&gt;、&quot;、&#x27;、()</span>”等,在提交请求后査看HTML源代码,看这些输入的字符是否被转义。
+                    </p>
+                    <p>
+                        在输出这些敏感字符时,很有可能程序已经做了过滤,这样在寻找这些字符时就不太容易,这时可以输入“<span class="text-primary">AAAAA</span>”字符串,然后在查找源代码的时候直接查找<span class="text-primary">AAAAA</span>或许比较方便。
+                    </p>
+                    <h4>
+                        <i class="mdi mdi-rhombus-medium"></i>
+                        无法得知输出位置
+                    </h4>
+                    <p>
+                        非常多的Web应用程序源代码是不对外公开的,这时在测试XSS时就有可能无法得知输入数据到底在何处显示,比如,测试某留言本是否存在XSS,那么在留言之后,可能需要经过管理员的审核才能显示,这时无法得知输入的数据在后台管理页面处于何种状态,例如以下两种都是可能的:
+                    </p>
+                    <p>
+                        在<code class="language-html">&lt;div&gt;</code>标签中:<code class="language-html">&lt;div&gt;XSS Test&lt;div&gt;</code>
+                    </p>
+                    <p>
+                        在<code class="language-html">&lt;input&gt;</code>标签中:<code class="language-html">&lt;input type=&quot;text&quot; name=&quot;content&quot; value=&quot; XSS Test&quot;/&gt;</code>
+                    </p>
+                    <p>
+                        对于这种情况,通常会采用输入“ <span style="color:peru;">"/>XSS Test</span> ”来测试。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,120 @@
+<div class="content" id="app">
+  <div class="breadcrumb-wrapper">
+    <h1>学生信息管理</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb p-0">
+            <li class="breadcrumb-item">
+              <span class="mdi mdi-home"></span>
+            </li>
+            <li class="breadcrumb-item">
+                平台管理
+            </li>
+            <li class="breadcrumb-item" aria-current="page">
+              学生信息管理
+            </li>
+        </ol>
+    </nav>
+  </div>
+  <div v-if="status !== 1" class="sk-wave">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+    <div class="rect5"></div>
+  </div>
+  <div v-if="status === 1" class="card card-default" style="height: calc(100% - 24px);">
+    <div class="card-header card-header-border-bottom">
+        <h2>学生信息</h2>
+    </div>
+    <div class="card-body">
+      <table style="width: 100%;" class="table table-hover nowrap">
+        <thead>
+          <tr>
+            <th v-for="key in Object.keys(alias)">{{ alias[key] }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="row in this.data">
+            <td v-for="key in Object.keys(alias)">
+              <div v-if="key === 'uid'">{{ row[key] }}</div>
+              <button v-else-if="key === 'delete'" v-on:click="deleteInfo(row.uid)" type="button" class="btn btn-danger" style="width: 70px;">删除</button>
+              <input v-else-if="key === 'password'" v-on:change="updateInfo(row.uid, key, $event)" class="form-control" type="password" placeholder="********"/>
+              <input v-else v-on:change="updateInfo(row.uid, key, $event)" class="form-control" type="text" :value="row[key]"/>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+  new Vue({
+    el: "#app",
+    data: {
+      status: 0,
+      data: {},
+      alias: {
+        "uid": "序号",
+        "username": "用户名",
+        "realName": "真实姓名",
+        "totalTime": "总时长",
+        "password": "密码",
+        "delete": "删除学生",
+      },
+    },
+    methods: {
+      getInfo: function() {
+        axios.post("/admin/getAllStudentInfo").then(res => {
+        if (res.status === 200) {
+          this.status = 1;
+          this.data = res.data.data;
+        }
+        else {
+          this.status = -1;
+        }
+      });
+      },
+      updateInfo: function(uid, column, event) {
+        axiosPostFormdata("/admin/updateStudentInfo", {uid, column, value: event.target.value}).then(res => {
+          if (res.status === 200 && res.data.status) {
+            toastr.success("信息修改成功!");
+            this.getInfo();
+          }
+          else {
+            toastr.error("信息修改失败!");
+          }
+        });
+      },
+      deleteInfo: function(uid) {
+        axiosPostFormdata("/admin/deleteStudent", {uid}).then(res => {
+          if (res.status === 200 && res.data.status) {
+            toastr.success("学生删除成功!");
+            this.getInfo();
+          }
+          else {
+            toastr.error("学生删除失败!");
+          }
+        });
+      },
+    },
+    computed: {
+      
+    },
+    mounted: function() {
+      this.getInfo();
+    },
+    updated: function() {
+      
+    },
+  });
+</script>
+<style scoped>
+  #app {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+  }
+  #app>div {
+    width: 95%;
+  }
+</style>

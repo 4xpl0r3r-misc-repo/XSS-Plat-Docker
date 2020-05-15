@@ -1,0 +1,111 @@
+<div class="content">
+    <div class="breadcrumb-wrapper">
+        <h1>反射型跨站脚本</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb p-0">
+                <li class="breadcrumb-item">
+                    <a href="/">
+                        <span class="mdi mdi-home"></span>
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    跨站脚本基础
+                </li>
+                <li class="breadcrumb-item" aria-current="page">
+                    反射型跨站脚本
+                </li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card card-default">
+                <div class="card-header card-header-border-bottom" style="padding-top: 14px;padding-bottom: 10px;">
+                    <h2>
+                        知识拓展：URL编码
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <p><span class="text-primary">URL编码</span>（URL encoding）是特定上下文的统一资源定位符 （URL）的编码机制。</p>
+                    <p>Url编码通常也被称为<span class="text-primary">百分号编码</span>（Url Encoding，also known as percent-encoding），是因为它的编码方式非常简单，使用<span class="text-warning">%百分号加上两位的字符</span>——0123456789ABCDEF——代表一个字节的 十六进制形式。Url编码默认使用的字符集是<span class="text-primary">US-ASCII</span>。例如a在US-ASCII码中对应的字节是0x61，那么Url编码之后得到的就 是%61，我们在地址栏上输入http://g.cn/search?q=%61%62%63，实际上就等同于在google上搜索abc了。又如@符号 在ASCII字符集中对应的字节为0x40，经过Url编码之后得到的是%40。</p>
+                    <p>对于非ASCII字符，需要使用<span class="text-warning">ASCII字符集的超集</span>进行编码得到相应的字节，然后对每个字节执行百分号编码。对于Unicode字符，RFC文档建议使用utf-8对其进行编码得到相应的字节，然后对每个字节执行百分号编码。如"中文"使用UTF-8字符集得到的字节为0xE4 0xB8 0xAD 0xE6 0x96 0x87，经过Url编码之后得到"%E4%B8%AD%E6%96%87"。</p>
+                    <p>如果某个字节对应着ASCII字符集中的某个非保留字符，则此字节无需使用百分号表示。例如"Url编码"，使用UTF-8编码得到的字节是 0x55 0x72 0x6C 0xE7 0xBC 0x96 0xE7 0xA0 0x81，由于前三个字节对应着ASCII中的非保留字符"Url"，因此这三个字节可以用非保留字符"Url"表示。最终的Url编码可以简化 成"Url%E7%BC%96%E7%A0%81" ，当然，如果你用"%55%72%6C%E7%BC%96%E7%A0%81"也是可以的。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card card-default">
+                <div class="card-body">
+                    <h4>
+                        <i class="mdi mdi-book-open-variant"></i>
+                        反射型跨站脚本攻击的生效方式.
+                    </h4>
+                    <p>
+                        <span class="text-primary">反射型跨站脚本</span>也被称为<span class="text-primary">非持久性跨站脚本</span>,是<span class="text-primary">最容易触发</span>的一种跨站脚本漏洞。当用户访问一个带有跨站脚本攻击代码的URL请求时,服务器端接收数据后处理,然后把带有跨站脚本代码的数据发送到浏览器,浏览器解析这段带有XSS代码的数据后,最终造成跨站脚本漏洞。这个过程就像一次反射,故称为反射型跨站脚本。
+                    </p>
+                    <h4>
+                        <i class="mdi mdi-cube-send"></i>
+                        样例 2-1
+                    </h4>
+                    <p>
+                        在右侧，有一个反射型XSS漏洞示例
+                    </p>
+                    <div style="padding-left: 2rem;">
+                        <h4>
+                            <i class="mdi mdi-auto-fix"></i>
+                            应用功能
+                        </h4>
+                        <p>
+                            显示出GET变量中的username变量。熟悉的同学可能会发现，这里和XSS介绍中的样例基本上是一样的，只是少了个前台。
+                        </p>
+                        <h4>
+                            <i class="mdi mdi-ladybug"></i>
+                            漏洞触发
+                        </h4>
+                        <p>
+                            在地址栏中将参数username改为<code
+                                class="language-html">&lt;script&gt;alert(&#x27;XSS Attack!&#x27;)&lt;/script&gt;</code>即可触发XSS漏洞，发生弹窗。
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="card card-default">
+                <div class="card-header card-header-border-bottom">
+                    <h2>代码&操作台 2-1</h2>
+                </div>
+                <div class="card-body">
+                    <h4>
+                        <i class="mdi mdi-code-not-equal-variant"></i>
+                        代码
+                    </h4>
+                    <!-- /virtualenv/2-1/ -->
+                    index.php
+                    <pre><code class="language-php">&lt;?php
+        $username = $_GET[&#x27;username&#x27;];
+        echo $username;</code></pre>
+                    <h4>
+                        <i class="mdi mdi-cube-outline"></i>
+                        虚拟实验操作台<br>
+                    </h4>
+
+                    <a class="btn btn-sm btn-square btn-primary" target="_blank"
+                        href="/virtualenv/2-1/?username=Steve Jobs">点我进入虚拟环境</a>
+                    <br>
+                    <code class="url-code">URL: /virtualenv/2-1/?username=Steve Jobs</code>
+                    <br>
+                    <a class="btn btn-sm btn-square btn-danger" target="_blank"
+                        href="/virtualenv/2-1/?username=<script>alert('XSS Attack!')</script>">点我触发虚拟环境漏洞</a>
+                    <br>
+                    <code class="url-code">URL: /virtualenv/2-1/?username=&lt;script&gt;alert(&#x27;XSS Attack!&#x27;)&lt;/script&gt;</code>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

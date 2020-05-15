@@ -1,0 +1,258 @@
+<div class="content">
+    <div class="breadcrumb-wrapper">
+        <h1>存储型跨站脚本</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb p-0">
+                <li class="breadcrumb-item">
+                    <a href="/">
+                        <span class="mdi mdi-home"></span>
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    跨站脚本基础
+                </li>
+                <li class="breadcrumb-item" aria-current="page">
+                    存储型跨站脚本
+                </li>
+            </ol>
+        </nav>
+    </div>
+    <!-- <div class="col-xl-4">
+        <div class="card card-default">
+            <div class="card-header card-header-border-bottom">
+                <h2>界面功能介绍</h2>
+            </div>
+            <div class="card-body">
+
+            </div>
+        </div>
+    </div> -->
+    <div class="row">
+        <div class="col-xl-6">
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card card-default">
+                        <div class="card-body">
+                            <h4>
+                                <i class="mdi mdi-book-open-variant"></i>
+                                存储型跨站脚本攻击的生效方式.
+                            </h4>
+                            <p>
+                                <span class="text-primary">存储型跨站脚本</span>又被称为持久性跨站脚本,存储型跨站脚本是<span class="text-danger">最危险</span>的一种跨站脚本。
+                            </p>
+                            <p>
+                                <span class="text-warning">允许用户存储数据</span>的Web应用程序都可能会出现存储型跨站脚本漏洞,当攻击者提交一段跨站脚本代码后,被服务器端接收并存储,当攻击者再次访问某个页面时,这段跨站脚本代码被程序读出来响应给浏览器,造成跨站脚本攻击,这就是存储型跨站脚本。
+                            </p>
+                            <p>
+                                存储型XSS与反射型XSS、DOM型XSS相比,具有<span class="text-danger">更高的隐蔽性,危害性也更大</span>。它们间最大的区别在于反射型XSS与DOM型XSS执行都必须依靠用户手动去触发,而存储型XSS却不需要。
+                            </p>
+                            <h4>
+                                <i class="mdi mdi-cube-send"></i>
+                                样例 2-2
+                            </h4>
+                            <p>
+                                在右侧，有一个存储型XSS漏洞示例
+                            </p>
+                            <div style="padding-left: 2rem;">
+                                <h4>
+                                    <i class="mdi mdi-auto-fix"></i>
+                                    应用功能
+                                </h4>
+                                <p>
+                                    第一个页面展示所有留言，并有一个提交留言的接口。
+                                </p>
+                                <h4>
+                                    <i class="mdi mdi-ladybug"></i>
+                                    漏洞触发
+                                </h4>
+                                <p>
+                                    提交一段内容如下的留言，回到查看留言页面,即可触发漏洞。
+                                </p>
+                                <p>
+                                    <code class="language-html">&lt;script&gt;alert(&quot;XSS Attack!&quot;)&lt;/script&gt;</code>
+                                </p>
+                                <p>
+                                    大家可能发现了，这里和前几课里不一样，使用了双引号而不是单引号，如果后端使用了双引号，这里就需要用单引号，总之在检测时两种引号都应该尝试一下。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-12">
+                    <div class="card card-default">
+                        <div class="card-header card-header-border-bottom">
+                            <h2>
+                                <i class="mdi mdi-book-open-variant"></i>
+                                深入存储型XSS漏洞.
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                攻击者将带有XSS代码的留言提交到数据库,当用户查看这段留言时,浏览器会把XSS攻击代码认为是正常的JavaScript代码来执行。这个流程<span class="text-warning">不需要受害用户进行任何特定操作（如打开特定URL）</span>。所以，存储型XSS具有更高的隐蔽性和危害性。
+                            </p>
+                            <h4>
+                                <i class="mdi mdi-cube-scan"></i>
+                                另一种类型的存储型XSS漏洞.
+                            </h4>
+                            <p>
+                                在测试是否存在XSS时,首先要确定输入点与输出点。例如,我们要在留言内容上测试XSS漏洞,首先就要去寻找留言内容输出(显示)的地方是在标签内还是在标签属性内,或者在其他地方。如果输出的数据在属性内,那么XSS代码是不会被执行的。
+                            </p>
+                            <p>
+                                如<code class="language-html">&lt;input type=&quot;text&quot; name=&quot;content&quot; value=&quot;&lt;script&gt;alert(1)&lt;/script&gt;&quot;/&gt;</code>
+                            </p>
+                            <p>
+                                以上JavaScript代码虽然成功地插入到了HTML中,但却无法执行,因为XSS代码出现在Value属性中,被当作值来处理,最终浏览器解析HTML时,将会把数据以文本的形式输出在网页中。
+                            </p>
+                            <p>
+                                在知道了输出点之后,就可以根据相应的标签构造HTML代码来闭合,插入XSS代码为
+                            </p>
+                            <p>
+                                <code class="language-html">&quot;/&gt;&lt;script&gt;alert(1)&lt;/script&gt;</code>
+                            </p>
+                            <p>
+                                最终在HTML文档中为
+                            </p>
+                            <p>
+                                <code class="language-html">&lt;input type=&quot;text&quot; name=&quot;content&quot; value=&quot;&quot;/ &gt;&lt;script&gt;alert(1)&lt;/script&gt;&quot;/&gt;</code>
+                            </p>
+                            <p>
+                                这样就可以<span class="text-primary">闭合input标签</span>,使输出的内容<span class="text-primary">不在value属性中</span>,从而造成XSS漏洞。
+                            </p>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-6">
+            <div class="card card-default">
+                <div class="card-header card-header-border-bottom">
+                    <h2>代码&操作台 2-2</h2>
+                </div>
+                <div class="card-body">
+                    <!-- /virtualenv/2-2/ -->
+                    <h4>
+                        <i class="mdi mdi-cube-outline"></i>
+                        虚拟实验操作台<br>
+                    </h4>
+                    <div id="2_2_virtualenv_unstarted">
+                        <a class="btn btn-sm btn-square btn-primary" href="javascript:startEnv()">点我启动虚拟环境</a>
+                    </div>
+                    <div id="2_2_virtualenv_started">
+                        <a class="btn btn-sm btn-square btn-primary" target="_blank"
+                            href="/virtualenv/2-2/comment.php">点我进入虚拟环境</a>
+                        <a class="btn btn-sm btn-square btn-warning" href="javascript:recoverEnv()">点我重启虚拟环境</a>
+                        <a class="btn btn-sm btn-square btn-danger" href="javascript:shutdownEnv()">点我关闭虚拟环境</a>
+                    </div>
+                    <h4>
+                        <i class="mdi mdi-code-not-equal-variant"></i>
+                        代码
+                    </h4>
+                    addComment.php
+                    <pre><code class="language-php">&lt;?php
+    $conn = new mysqli(&#x27;127.0.0.1&#x27;, &#x27;****&#x27;, &#x27;****&#x27;, &#x27;xss-virtualenv&#x27;);
+    // Check connection
+    if ($conn-&gt;connect_error) {
+        die(&quot;连接失败: &quot; . $conn-&gt;connect_error);
+    }
+    $result = $conn-&gt;query(&quot;INSERT INTO &#x60;2_2_&quot;.$_COOKIE[&#x27;username&#x27;].&quot;&#x60; (&#x60;comment&#x60;) VALUES (&#x27;&quot;.$_POST[&#x27;comment&#x27;].&quot;&#x27;);&quot;);
+    ?&gt;
+    &lt;h3&gt;评论添加完成&lt;/h3&gt;
+    &lt;a href=&quot;comment.php&quot;&gt;查看所有评论&lt;/a&gt;</code></pre>
+                    comment.php
+                    <pre><code class="language-php">&lt;h4&gt;以下为一些评论&lt;/h4&gt;
+    &lt;ul&gt;
+    &lt;?php
+    $conn = new mysqli(&#x27;127.0.0.1&#x27;, &#x27;****&#x27;, &#x27;****&#x27;, &#x27;xss-virtualenv&#x27;);
+    // Check connection
+    if ($conn-&gt;connect_error) {
+        die(&quot;连接失败: &quot; . $conn-&gt;connect_error);
+    }
+    $result = $conn-&gt;query(&quot;SELECT comment FROM 2_2_&quot;.$_COOKIE[&#x27;username&#x27;]);
+    if ($result-&gt;num_rows &gt; 0) {
+        // 输出数据
+        while($row = $result-&gt;fetch_assoc()) {
+            echo &quot;&lt;li&gt;&quot; . $row[&quot;comment&quot;]. &quot;&lt;/li&gt;&quot;;
+        }
+    } else {
+        echo &quot;&lt;li&gt;0 结果&lt;/li&gt;&quot;;
+    }
+    $conn-&gt;close();
+    ?&gt;
+    &lt;/ul&gt;
+    &lt;form action=&quot;addComment.php&quot; method=&quot;POST&quot;&gt;
+        &lt;label&gt;添加评论:&lt;/label&gt;
+        &lt;input type=&quot;text&quot; name=&quot;comment&quot;/&gt;
+        &lt;input type=&quot;submit&quot;/&gt;
+    &lt;/form&gt;</code></pre>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+    }
+    function startEnv() {
+        $.post({
+            url: "/virtualenv/recover",
+            async: false,
+            data: {
+                Cp: '2_2'
+            },
+            success: function (data) {
+                if (data["status"]) {
+                    setCookie('virtualEnvStarted', 'true');
+                    toastr.success("虚拟环境启动成功!");
+                    reloadPage();
+                } else {
+                    toastr.error("虚拟环境启动失败!报错信息:" + data["status"]);
+                }
+            }
+        });
+    }
+    function recoverEnv() {
+        $.post({
+            url: "/virtualenv/recover",
+            async: false,
+            data: {
+                Cp: '2_2'
+            },
+            success: function (data) {
+                if (data["status"]) {
+                    setCookie('virtualEnvStarted', 'true');
+                    toastr.success("虚拟环境重启成功!");
+                } else {
+                    toastr.error("虚拟环境重启失败!报错信息:" + data["status"]);
+                }
+            }
+        });
+    }
+    function shutdownEnv() {
+        $.post({
+            url: "/virtualenv/shutdown",
+            async: false,
+            data: {
+                Cp: '2_2'
+            },
+            success: function (data) {
+                if (data["status"]) {
+                    setCookie('virtualEnvStarted', '');
+                    toastr.success("虚拟环境关闭成功!");
+                    reloadPage();
+                } else {
+                    toastr.error("虚拟环境关闭失败!报错信息:" + data["status"]);
+                }
+            }
+        });
+    }
+</script>

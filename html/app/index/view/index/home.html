@@ -1,0 +1,88 @@
+<!-- 第一行  -->
+<div class="row">
+    <div class="col-xl-8 col-md-12">
+        <!-- 个人学习进度表 -->
+        <div class="card card-default" data-scroll-height="675">
+            <div class="card-header">
+                <h2>个人学习进度</h2>
+            </div>
+            <div class="card-body">
+                <canvas id="linechart" class="chartjs"></canvas>
+            </div>
+            <div class="card-footer d-flex flex-wrap bg-white p-0">
+                <div class="col-6 px-0">
+                    <div class="text-center p-4">
+                        <h4>6308{//TODO}</h4>
+                        <p class="mt-2">全站今日学会数</p>
+                    </div>
+                </div>
+                <div class="col-6 px-0">
+                    <div class="text-center p-4 border-left">
+                        <h4>70506{//TODO}</h4>
+                        <p class="mt-2">全站所有学会数</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-4 col-md-12" >
+        <!-- 掌握类型分布表 -->
+        <div class="card card-default" data-scroll-height="675">
+            <div class="card-header justify-content-center">
+                <h2>掌握类型分布</h2>
+            </div>
+            <div class="card-body pt-0" style="position: relative; height:50vh">
+                <canvas id="polar"></canvas>
+            </div>
+            <div class="card-footer d-flex flex-wrap bg-white p-0">
+                <div class="col-6">
+                    <div class="py-4 px-4">
+                        <ul class="d-flex flex-column justify-content-between">
+                            <li class="mb-2"><i class="mdi mdi-checkbox-blank-circle-outline mr-2"
+                                    style="color: #4c84ff"></i>反射型XSS</li>
+                            <li class="mb-2"><i class="mdi mdi-checkbox-blank-circle-outline mr-2" 
+                                    style="color: #80e1c1 "></i>存储型XSS</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-6 border-left">
+                    <div class="py-4 px-4 ">
+                        <ul class="d-flex flex-column justify-content-between">
+                            <li class="mb-2"><i class="mdi mdi-checkbox-blank-circle-outline mr-2"
+                                    style="color: #8061ef"></i>DOM型XSS</li>
+                            <li class="mb-2"><i class="mdi mdi-checkbox-blank-circle-outline mr-2" style="color: #ffa128"></i>总结</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- 第二行  -->
+<div class="row">
+    <div class="col-xl-4">
+        <div class="card card-default" id="activity-user">
+            <div class="card-header">
+                <h2>用户总数</h2>
+            </div>
+            <div class="card-body">
+                <canvas id="currentUser" class="chartjs"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8">
+        <div class="card card-default" id="activity-user">
+            <div class="card-header d-flex flex-wrap justify-content-between">
+                <h2>用户活跃</h2>
+                <div class="totalUserCount">
+                    <span></span>
+                </div>
+            </div>
+            <div class="card-body">
+                <canvas id="activity" class="chartjs"></canvas>
+            </div>
+        </div>
+    </div>
+</div>

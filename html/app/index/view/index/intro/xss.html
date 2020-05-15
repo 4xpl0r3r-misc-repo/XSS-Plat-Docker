@@ -1,0 +1,247 @@
+<div class="content">
+    <div class="breadcrumb-wrapper">
+        <h1>跨站脚本简介</h1>
+        <button class="btn btn-success btn-video">点我查看本期教学视频</button>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb p-0">
+                <li class="breadcrumb-item">
+                    <a href="/">
+                        <span class="mdi mdi-home"></span>
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    平台概述
+                </li>
+                <li class="breadcrumb-item" aria-current="page">
+                    跨站脚本简介
+                </li>
+            </ol>
+        </nav>
+    </div>
+    <div id="app" style="display: none;" v-bind:style="elStyle">
+        <div style="margin-bottom: 20px;">
+            <a class="btn btn-sm btn-square btn-primary" style="color: white; width: 100px; margin-right: 5px;" v-on:click="prePage">&lt;</a>
+            <a class="btn btn-sm btn-square btn-primary" style="color: white; width: 80px; margin-right: 5px;">{{ cur + 1 }} / {{ max + 1 }}</a>
+            <a class="btn btn-sm btn-square btn-primary" style="color: white; width: 100px;" v-on:click="nxtPage">&gt;</a>
+        </div>
+        <div class="row" style="display: flex; flex-flow: row nowrap; justify-content: center;">
+            <div class="col-xl-6" v-if="cur == 0">
+                <div class="card card-default" style="height: calc(100% - 24px);">
+                    <div class="card-header card-header-border-bottom">
+                        <h2><i class="mdi mdi-comment-question"></i> 谁盗了小明的号?（1）</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            有一条，小明一如既往的在玩着XX荣耀。突然收到了一条来自游戏好友的信息：XX荣耀最新活动，免费领取一款任意价值88元的皮肤。并带了一个<span
+                                class="text-warning">链接</span>：www.pq.com/****************
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6" v-if="cur == 1">
+                <div class="card card-default" style="height: calc(100% - 24px);">
+                    <div class="card-header card-header-border-bottom">
+                        <h2><i class="mdi mdi-comment-question"></i> 谁盗了小明的号?（2）</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            如今诈骗信息横行，小明立刻看了一眼链接,发现是www.pq.com，是游戏的<span
+                                class="text-danger">官方域名</span>，那就不会有假，信誓旦旦地点了进去，页面弹窗<span
+                                class="text-danger">要求输入账号密码</span>，也很<span class="text-danger">信任地输入</span>了。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6" v-if="cur == 2">
+                <div class="card card-default" style="height: calc(100% - 24px);">
+                    <div class="card-header card-header-border-bottom">
+                        <h2><i class="mdi mdi-comment-question"></i> 谁盗了小明的号?（3）</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            小明在页面里成功领取到了皮肤，但是页面提示<span
+                                class="text-warning">7个工作日内</span>到账，小明回到了游戏，皮肤并没有到账，但他并没有疑虑。打了3个小时游戏，小明回到pq，发现自己的<span
+                                class="text-danger">pq被人登陆</span>，发送了大量诈骗信息给亲朋好友，遭到了巨大的损失。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6" v-if="cur == 3">
+                <div class="card card-default" style="height: calc(100% - 24px);">
+                    <div class="card-header card-header-border-bottom">
+                        <h2>小明遭遇了跨站脚本攻击！</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            小明虽然访问的<span class="text-danger">确实是官方的网站</span>，但是网站页面<span
+                                class="text-danger">存在跨站脚本漏洞</span>，因此，小明输入的<span
+                                class="text-danger">账号密码遭到劫持</span>，被发送到黑客的服务器，并且<span
+                                class="text-danger">网站页面被跨站脚本篡改</span>，导致小明以为自己成功领取了福利。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6" v-if="cur == 4">
+                <div class="card card-default" style="height: calc(100% - 24px);">
+                    <div class="card-header card-header-border-bottom">
+                        <h2>
+                            <i class="mdi mdi-book-open-variant"></i> 跨站脚本的定义.</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            <span class="text-primary">跨站脚本注入攻击</span>，英文名为<span class="text-primary">Cross Site
+                                Scripting</span>,又简称CSS,为避免与层叠样式表的英文简称CSS混淆，故常用简称为<span
+                                class="text-primary">XSS</span>,是常见的Web应用程序安全漏洞之一
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6" v-if="cur == 5">
+                <div class="card card-default" style="height: calc(100% - 24px);">
+                    <div class="card-header card-header-border-bottom">
+                        <h2>
+                            <i class="mdi mdi-book-open-page-variant"></i> 跨站脚本是怎样的漏洞？
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            跨站脚本漏洞使攻击者可以在网页中嵌入<span
+                                class="text-danger">自定义的客户端脚本</span>，通常是Javascript编写的恶意代码，当用户使用浏览器浏览被嵌入恶意代码的页面时，恶意代码将会在用户的浏览器中执行。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6" v-if="cur == 6">
+                <div class="card card-default" style="height: calc(100% - 24px);">
+                    <div class="card-header card-header-border-bottom">
+                        <h2>
+                            <i class="mdi mdi-book-open-page-variant"></i> 看起来对我的服务器没有损害，那我还有必要处理吗？
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            显然，XSS漏洞是每个Web应用程序开发者都必须解决的问题。
+                        </p>
+                        <p>
+                            从上述内容可得到，XSS属于客户端攻击，最终受害者是用户。但用户是受害者，不能定义为和自己的网站、服务器安全没有关系。<b>千万别忘记!<span
+                                    class="text-danger">网站管理员</span>也属于网站的用户!</b>这就意味着“服务器端”也可能被攻击。因为管理员的权限比普通用户大得多，在很多网站系统里，管理员都可以对网站进行文件管理、数据管理等操作，而攻击者有可能通过管理员的身份实施对服务器的攻击。
+                        </p>
+                        <p>
+                            更何况，客户遭遇攻击，无疑会使网站拥有方陷入<span class="text-danger">信用危机</span>。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6" v-if="cur == 7">
+                <div class="card card-default">
+                    <div class="card-body">
+                        <h4>
+                            <i class="mdi mdi-book-open-variant"></i>
+                            XSS攻击的生效方式.
+                        </h4>
+                        <p>
+                            XSS攻击是在网页中嵌入客户端恶意脚本代码，这些恶意代码一般是使用Javascript语言编写的（也有使用ActionScript、VBScript实施攻击的，但这两种语言已经逐渐淘汰，也较为少用)所以，想要深入研究XSS,必须要熟练使用Javascript。(为缩短篇幅,后文中使用js代替Javascript)
+                        </p>
+                        <h4>
+                            <i class="mdi mdi-book-open-page-variant"></i>
+                            XSS攻击的常见效果.
+                        </h4>
+                        <p>
+                            JavaScript可以用来获取用户的 Cookie、改变网页内容、URL跳转,那么存在XSS漏洞的
+                            网站,就可以盗取用户Cookie、黑掉页面、导航到恶意网站,而攻击者需要做的仅仅是向Web
+                            页面中注入JavaScript代码。
+                        </p>
+
+                        <h4>
+                            <i class="mdi mdi-cube-send"></i>
+                            样例 1-1
+                        </h4>
+                        <p>
+                            在右侧，有一个最简单的XSS漏洞实例，其代码很简单，在index.htm页面中提交数据后,跳转到print.php页面
+                        </p>
+                        <div style="padding-left: 2rem;">
+                            <h4>
+                                <i class="mdi mdi-auto-fix"></i>
+                                应用功能
+                            </h4>
+                            <p>
+                                将输入的用户名打印出来
+                            </p>
+                            <h4>
+                                <i class="mdi mdi-ladybug"></i>
+                                漏洞触发
+                            </h4>
+                            <p>
+                                在输入框中填入<code
+                                    class="language-html">&lt;script&gt;alert(&#x27;XSS Attack!&#x27;)&lt;/script&gt;</code>即可触发XSS漏洞，发生弹窗。
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6" v-if="cur == 7">
+                <div class="card card-default">
+                    <div class="card-header card-header-border-bottom">
+                        <h2>代码&操作台 1-1</h2>
+                    </div>
+                    <div class="card-body">
+                        <h4>
+                            <i class="mdi mdi-code-not-equal-variant"></i>
+                            代码
+                        </h4>
+                        <!-- /virtualenv/1-1/ -->
+                        index.htm
+                        <pre class="language-html"><code>&lt;form action=&quot;print.php&quot; method=&quot;post&quot;&gt;
+                                &lt;label&gt;请输入用户名:&lt;/label&gt;
+                                &lt;input type=&quot;text&quot; name=&quot;username&quot; /&gt; &lt;input type=&quot;submit&quot; value=&quot;提交&quot; /&gt;
+                            &lt;/form&gt;</code></pre>
+                                            print.php
+                                            <pre><code class="language-php">&lt;?php
+                            echo(&#x27;您的用户名是:&#x27;.$_POST[&#x27;username&#x27;]);</code></pre>
+                        <h4>
+                            <i class="mdi mdi-cube-outline"></i>
+                            虚拟实验操作台
+                            <button class="btn btn-sm btn-square btn-primary" style="float: right;"
+                                onclick="javascript:$('#example-1-1').attr('src', $('#example-1-1').attr('src'));
+                                toastr.success('虚拟环境还原成功!');">点我还原虚拟环境</button>
+                        </h4>
+                        <iframe id="example-1-1" src="/virtualenv/1-1/index.htm" style="height: 100px;"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                cur: 0,
+                min: 0,
+                max: 7,
+                elStyle: {
+                    display: "none"
+                }
+            },
+            methods: {
+                prePage: function() {
+                    if (this.cur > this.min) this.cur--;
+                },
+                nxtPage: function() {
+                    if (this.cur < this.max) this.cur++;
+                }
+            },
+            updated: function() {
+                Prism.highlightAll();
+            },
+            mounted: function() {
+                this.elStyle = {
+                    display: "flex",
+                    flexFlow: "column nowrap",
+                    alignItems: "center"
+                };
+            }
+        })
+    </script>
+</div>

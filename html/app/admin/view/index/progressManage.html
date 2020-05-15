@@ -1,0 +1,224 @@
+<div class="content" id="app">
+  <div class="breadcrumb-wrapper">
+    <h1>学习进度管理</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb p-0">
+            <li class="breadcrumb-item">
+              <span class="mdi mdi-home"></span>
+            </li>
+            <li class="breadcrumb-item">
+                平台管理
+            </li>
+            <li class="breadcrumb-item" aria-current="page">
+              学习进度管理
+            </li>
+        </ol>
+    </nav>
+  </div>
+  <div v-if="status !== 1" class="sk-wave">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+    <div class="rect5"></div>
+  </div>
+  <div v-if="status === 1" class="card card-default" style="height: calc(100% - 24px);">
+    <div class="card-header card-header-border-bottom">
+        <h2>学习进度</h2>
+    </div>
+    <div class="card-body">
+      <div class="hoverable-data-table" style="margin-bottom: 25px; background-color: white;">
+        <table class="table table-hover nowrap" style="width:100%;">
+          <thead>
+            <tr>
+              <th v-for="key in Object.keys(alias)">{{ alias[key] }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="row in data">
+              <td v-for="key in Object.keys(alias)">
+                <template v-if="key === 'totalTime'">{{ secondToText(row[key]) }}</template>
+                <template v-else>{{ row[key] == null ? "未学习" : row[key] }}</template>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div v-if="status === 1" class="card card-default" style="height: calc(100% - 24px);">
+    <div class="card-header card-header-border-bottom">
+        <h2>学习时间</h2>
+    </div>
+    <div class="card-body">
+      <div class="champion">
+        <div class="medal">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAFjUlEQVRoge2ZXWwUVRiGn293trul2wIrhUL5qwoxGkz0zphA4YIWTARjWgwQBfHCmCiwQr1QsUK8QLGCP3ciENpYMJgI8mugiTHh0r9EEzVFhbYUSqHdLS07P8eL06WAM+3ObNUL+yZzs98573zvnHO+95tZGMMY/t+QXAcubEqeAFXlHnWqW1btOunnxmtaGqodkeNuMYWc2F+5YUkuPKFcbxhSkgQsj2hDZUu9kStXzcGDYUfkbY+wHRanLue8ch14evW7PwH7PML3097zTK5chaVta4F5HuE9exckf8yVK2cBACFxXgVSbjGBtx7dXVc8EkdNy0dxhK0e4bQTYouvnPwMPr1yV6cgDR7hKdGY9fJIHIVkNgFTXYPCjsb5Gzv85ORLAEB/RG0HLrjFFKqusvHF6V5zn/3mg2kImzzC7WrA2uE3H98Czta+16+g3iNcKGJ4xbAsaxtQ5BoUXt9ftbnPbz6+BQBU/jp+j8C3HuG18z9NPnTnj09/vfNBwOug/9DfWe5VIIZFIAH19fUOory2QijsqL9vBUe9A4TdJoiozZ/V1tpBcgkkAODMyp1nQLzMa9HCpvU3TW9NS0M1sNhtoEJO7FuQPBU0j5zNxw0hJUlH1PduPMrmw8o9a+aVFi01HWkbFdNyg+uS5opzn5+9XPHkI7OAh++MmT3phLIjMyfPiiYQnvOg+GRfZfLjfHIIvIVuEriYm5MxcTImyrFXIrLNY6pv03K9f74EbuZmpa4DkJhaZoAqc50YwLTckLcAuN3c7IEMjmVjRAuYkEh4TQlkWm4YFQG3mpvV1w9A6YxyRDy69YCm5YZREQDa3Ozr/eeVZROLFxEvKfEaGti03JDzC00ueH7vuu1zZaBuUVkhk0MWCXUDgG6J0kWU78ITuCbR1S8t3No0WvccFQHqdE05TmgLinWMXJod4BC21MmS5t/zvXfeAtTJ2uWI7AfiiEC8GOIlEI2BEdGDLBNuDEA6BeleUAqEFEpWy+Lmw/+ZAHVqxXqgAQgRL4HSMohEhp9kZuDyRS0GHJRslKrm94PmEFjA4JM/hEiISZNh4iR/BN1dcKUTFA7IE0FXIpAAdWzVdAzrZyBO6RT/yWfR3QVdndntdJ8sbm73SxGsjBrWViBOvMQ7ecvSCZ77xZsnMUmfF0UxqDeDpOJ7BdRXNTNRoVZEwsye477n2/+EvrQ+rABzH/AmzGTgj99AKRvLmC1Lm1xfV73gfwWc8HIgTLzY+8Cm0xAtzI2voEBXLghj2Mv8phNgCzn6i1nc02nh7jkwsyJ3yqIsl1rqNxv/AkTuBYZ/wsYIpfROxGKD3NzjN50gh1i3x0ZeL3O3IytYUe53ah7NnNKXCs6QpbiFxPFLEUSArtW2DUh+Xi6Dl3Xzg8S/4ANKtQIwoPt+TCvgKig9F2DgevbHVr8s/gWE5CiQ7WWgsw1S13zT0Nuj5wL0DXIJX/ql8X8SHfkCUTtJ94YxM1A2DcTjOQxnYEVxGFekjSyVArAwjSN+0/G9AlLVfB7Yi1K6qzQiEA7DlcvQc3Vkgp6remzY0JWs6yKDe3C3XxcOJACAsPMGQop0Svc7oLfBpQ5Qjj7gpjk03jTBtnTsUoduMwCuXsluxV6cyL/TC2WhTq5YgnAEIcxdU2BCQjdwBQW6gTNNmDZDD24/r9uOirmQuaFX7Vr3UDut1HKpOuh7+0AePiBVB46jJInCoasTLrYNBUsmQmwcRAr0FRsH47OfWAQ6Lug2WuEgbAia/CBbflCnnnocUY26JRYoLta9TaxwyK0tU5fdvtTggVUAvShWSdUB35VnVAUAqGM1pRjyGsgLjFzZHKAJJ/KKVDfm/WVuVD+r6Dc1exmox4AKIPt30wWgFcVRbONwkGozhjH8Q/gLjpzxmxMsq+kAAAAASUVORK5CYII="/>
+          {{ this.first }}
+        </div>
+        <div class="medal" v-if="this.data.length >= 2">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAJaUlEQVRogeVZWWxc1Rn+zrnrLJ7dHi/xCsRBqRJKWAQVapGoSNuHViq4JQuIAs4Lm4ACKi0doECcKq1aFWhQgJAApU3VlbJUfSgqD1XjsAoaNyiY2OPYs3j2mbue04exQ+07du7YplLVX7ov9z/n/7/vnnP+5Vzgf1yIm0HXPXnPRiLgeUIgN9Izzm0buOq5G/aMubG346m7BwXg15QQoZGecxjcxvZnh0feP5Mt0Y3DZ4dH3r/u6XuZT1U3xMMBB+mZXMGq1PT7AFzrxh4F7vN51MH2cEhy2iryilZ7xw34OVvuhNv8gXKtZkeDLYhHQgue/o42kYFt27b/zt4z2bn+6Tu6Cce2/o64tNhONNiCilazOOffd4vLNYGDN478gYKMT2XzfLGuxetBi1e1ZEh3n8mOzcV7/V6PGfB6HLqpbI6DY7J/wvuSW1yuCYCAW5w9OJXJmjZzcEB3a6vCwW7ase87HUuZ2PnEXW2E46aeeExdrGOMYyozazKG+xOJBFt7AgC0wEcvcI70TC7n0IVbfPAqChMl67YlnUnCnR5FZkG/16GbzuXBGbInk54Xm8HUFIHDQ4dtxtgjyVRWZ7zBKrTHFM7Jrdsevze8WDe8754gCG7uibcqZFHw45wjmcronPGH/ppIWJ8aAQCggvdpi9mVdL7g0EUCfiiyRGSF3bxYp1F+qyyJNBpoccxL5YuwGKtWg8aBpvE0O+HA9QmN2eSHEzMZnWPhKhAQ9LRFVc7x7asfS/jn3w/vS3gpJXf2xGOqI/NwYGImrYNjz+GhH9c+dQIAYHuqjxuWbWULJYcuFgxCFkVZVas3zr/ThcouUaBqazDgGJ8plmBYtg2q/3wlWFxl4kayc//dj/gU+Y7z1vc79vSpbA7jp1Lplkq1W1d0Zkjhyf72eFt7NOSw89aHJ3RNM/ceuGHkvpXgWNEKAACRhL2abiJfqjp07eEQKKWBvM97rU5D11NCQm0R59fPl8qoagaxDfsnK8XRsBZxI+/87o3apq9+rkMzjE3xSGhBSUIIASFELJWrWwihl3XHY5Ggzxk6/5Wc0i2DPXVw157DK8Wx4hUAAIFYu8tVTSxVGqxCJAQO0kYI6WiPOLdOqVpDqaqJBsw9q8GwKgLPfOtHEyB4cSKdNRyGKYEkULEzFhYF6nQzkcoYlNEXX7hx78erwbAqAgBALOEH+VJVrNT0Be9zxQpsxtARdeQ0VDQNuXJF4pw/ulr/qyZwYNejx0DIy5PprPmf75OZLNojIUii85hNpmctgdA/uS2Zl5NVEwAAYuPBTKEoakZ9JxXKFZRqGjpbI46xumEiWyhSbrOH18L3mhA4MLz7CCX0b5PpWRsAJtNZxMNByKKzX5pIz9oE5I0DN+35+1r4dtWRuRGb4YGZXOHPrYEwPHYMA8F1kKv1qplTA5xY0GgeqVwOHEisld81IZBIcHr2uqPdVbuse0y/d10bgUeSoMr1FlozDGi6BdlkuDTeb3ipv3sgMUITCeK67l9KVlxKzMuhV458gQrCPsLR190RliIhP/F7lIZjKzUd6VwZyZmcCYaPLGYNX/vli15fjf9VETj06uhtBNjbFQ/TnvYoEUV3R8qyGD4+lWXJVI4D/PadWy/82UoxrJjAc6+MPkoI7tpwVqcYC/nPPKGBZHJlHDsxZXGQkR1bt3x3JTZWRODgq0d2Uk6e2XxutxDwOZvzZqRYruHdsQmbcb5z55cu/EWz85sm8PxLRwa4SI+t741L8ZizwgQAm3Fkc2WUqxpAAL9XRWvYD0Iau5vOFnF8fMYgNlm//SvnN1VaNB+FJGF3yO9hS4E3LQtvfnASumGBEAI+1ztP+VVsXt8NQp0k2qMBpLJFFIu13QCuaQZOU4ns4EtHz2WMf32gO9Y4zAAwTQZVlnDehh5ctuUcXLRpAH6vgmJZQ2q2uKTts9bFZAYMHXrlyGAzmJoiQCm/usWn6r4lwiQAKIqETYPrEPDXk5gqi+hsq5fTlZqjaD0tPq+KFq9iEI6rmsLUzGBC6Tdaw/5lT61AiWOvW1Y9X4nS8v1TLOJXqUC/2Qwm1wQSCU45Z4OB5fE7xLBsJFN5EAK0niHchvxeMM43JBLcNS7XA3svPNLGAUGR3Z973TDx3tgkdMNEb2cUHrXh7fxpkWUBnEMcuOTdmFsfrgkIIokBgDS3DYrlWsOGfl6KlRre/GAClZqOvq4oejqiDcflS1UUy/XrIEma/zhGm1tc7pfKtvMAYNs2AGC2UEVyJt8YVLGKd8eSYMzGxrM6lwQPAMmZHHLF+oewrLptiQizrnG5HdjlqU0TAq4b9atLVRFR1ZxRxbRs/PPEKRACbN7Qg2h4+X1f00yoc9vSMG0AhAn5D2fWnMDll19uUUImy9V67xsOeFHTDAeJ1GwJpmUj1OKFaVnIFSunn+qiMDo/PxTwAQBKFQ2UYGJoaMh2i6upTMw4/1U6W7q5PRZUFFlCsMWLyekc1vfFF4ACgGy+jGy+vGB+R2sQ5/R+MvbkdA6hgBfzgSGTK+sc+GUzmJoiwAn7Tb5UvV03LCiyiIGuGN4em0A8FkBwLry2RlqwVKLzej6JQoVSDalsEedt6AZQj1iFUkUEI79tBlPzxdxro2+0RQIXr+9rFwFgPJnBqXQBmwe7FwBcTio1He+NTaK9NYS+rvoBHzsxbafz5X9sv/L8S5vB03xTz/kd05kSLcyFvt7OGKJBH946dhKpWedt9WJJZUt4+9gEIiE/ejvr4AulGmZmSwTgtzQLZ0X9wKFXjz4sEnrX+Rt7ZFWp/ylNpvIYT2bgVSXEo0EEWzxQlbmeWDdQKNUwnSmgppvo74qdro903cLRD8YNxtjI9q0X3P9fIZBIcHr2JW/+XhHFL37mnC5lfusYlo2pmTyy+TIW39T5PAqiYT+62j657KrUdLx/PKmbJnvtmis/+zVCiPO/1adBAAB++vJxJUoLT4LQawb74lJrZOGvI5txGEb9sk6WJQiL+oBUtoTjH09bjPHn5ZJneGho49Kl6jKy6luJ514bvYVzstunykJfV1QJB72gpPHRYpxhtlDF+GRG1wzT4hz37Ni65bHV+F81AQB44Y+jMSbjewTkBnCuBAM+5lNlWZ7PsIaFqmbq+WJF4OA6AdlvidZD111xcXa1vteEwLzsGx2V1Az/PAW5goD3ESoMAABn9gkOMs7A/6LFyOu7LrjAPJOt/xv5Nx0c8ZUXL9VwAAAAAElFTkSuQmCC"/>
+          {{ this.second }}
+        </div>
+        <div class="medal" v-if="this.data.length >= 3">
+          <img width="48px" src="data:image/png;base64,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"/>
+          {{ this.third }}
+        </div>
+      </div>
+      <div id="chart" style="min-width:400px;height:600px"></div>
+    </div>
+  </div>
+</div>
+<script>
+  new Vue({
+    el: "#app",
+    data: {
+      status1: 0,
+      data1: {},
+      status2: 0,
+      data2: {},
+      alias: {
+        "uid": "序号",
+        "username": "用户名",
+        "realName": "真实姓名",
+        "totalTime": "总时长",
+        "lastUpdate": "上次登录",
+        "1_1": "本平台使用指南",
+        "1_2": "跨站脚本简介",
+        "2_1": "反射型跨站脚本",
+        "2_2": "存储型跨站脚本",
+        "2_3": "DOM型跨站脚本",
+        "3_1": "手工检测",
+        "3_2": "全自动检测",
+        "4_1": "输入与输出",
+        "4_2": "利用HttpOnly",
+      },
+    },
+    methods: {
+      secondToText: function(s) {
+        if (s < 60) return s.toString() + "秒";
+        else if (s < 3600) return Math.floor(s / 60).toString() + "分" + (s % 60).toString() + "秒";
+        else return Math.floor(s / 3600).toString() + "时" + Math.floor(s % 3600 / 60).toString() + "分" + (s % 60).toString() + "秒";
+      }
+    },
+    computed: {
+      status: function() {
+        if (this.status1 === 1 && this.status2 === 1 && this.data1.length > 0 && this.data2.length > 0) return 1;
+        else return 0;
+      },
+      data: function() {
+        let ndata = [];
+        for (let row of this.data1) {
+          let res = this.data2.filter(v => v.uid == row.uid);
+          let t;
+          if (res.length > 0) t = Object.assign(res[0], row);
+          else t = Object.assign({"uid": row.uid, "username": "null", "realName": "null", "totalTime": 0, "lastUpdate": 0}, row);
+          if (t.lastUpdate === 0) t.lastUpdate = "从未登录";
+          else t.lastUpdate = new Date(t.lastUpdate * 1000).toLocaleString();
+          ndata.push(t);
+        }
+        return ndata;
+      },
+      sorted: function() {
+        let data = this.data;
+        data.sort((a, b) => b.totalTime - a.totalTime);
+        return data;
+      },
+      first: function() {
+        if (this.data.length < 1) return "";
+        return this.sorted[0].realName;
+      },
+      second: function() {
+        if (this.data.length < 2) return "";
+        return this.sorted[1].realName;
+      },
+      third: function() {
+        if (this.data.length < 3) return "";
+        return this.sorted[2].realName;
+      },
+    },
+    mounted: function() {
+      axios.post("/admin/getAllProgress").then(res => {
+        if (res.status === 200) {
+          this.status1 = 1;
+          this.data1 = res.data.data;
+        }
+        else {
+          this.status1 = -1;
+        }
+      });
+      axios.post("/admin/getStudyTime").then(res => {
+        if (res.status === 200) {
+          this.status2 = 1;
+          this.data2 = res.data.data;
+        }
+        else {
+          this.status2 = -1;
+        }
+      });
+    },
+    updated: function() {
+      if (this.status !== 1) return;
+      let data = this.sorted;
+      let k = [], v = [];
+      for (let p of data) {
+        k.push(p.realName);
+        v.push(p.totalTime);
+      }
+      var chart = Highcharts.chart('chart',{
+        chart: {
+          type: 'column'
+        },
+        title: {
+          text: '学习时间排名'
+        },
+        xAxis: {
+          categories: k,
+          crosshair: true
+        },
+        yAxis: {
+          min: 0,
+          title: {
+            text: '时长（s）'
+          }
+        },
+        tooltip: {
+          headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+          pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+          '<td style="padding:0"><b>{point.y} s</b></td></tr>',
+          footerFormat: '</table>',
+          shared: true,
+          useHTML: true
+        },
+        plotOptions: {
+          column: {
+            borderWidth: 0
+          }
+        },
+        series: [{
+          name: '时长',
+          data: v
+        }]
+      });
+    }
+  });
+</script>
+<style scoped>
+  #app {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+  }
+  #app>div {
+    width: 95%;
+  }
+  .champion {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  .champion .medal {
+    margin-right: 50px;
+  }
+</style>

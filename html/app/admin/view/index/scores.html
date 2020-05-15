@@ -1,0 +1,102 @@
+<div class="content" id="app">
+  <div class="breadcrumb-wrapper">
+    <h1>学生成绩管理</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb p-0">
+            <li class="breadcrumb-item">
+              <span class="mdi mdi-home"></span>
+            </li>
+            <li class="breadcrumb-item">
+                平台管理
+            </li>
+            <li class="breadcrumb-item" aria-current="page">
+              学生成绩管理
+            </li>
+        </ol>
+    </nav>
+  </div>
+  <div v-if="status !== 1" class="sk-wave">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+    <div class="rect5"></div>
+  </div>
+  <div v-if="status === 1" class="card card-default" style="height: calc(100% - 24px);">
+    <div class="card-header card-header-border-bottom">
+        <h2>学生成绩</h2>
+    </div>
+    <div class="card-body">
+      <div id="chart" class="hoverable-data-table" style="margin-bottom: 25px; background-color: white;">
+        <table class="table table-hover nowrap" style="width:100%;">
+          <thead>
+            <tr>
+              <th v-for="key in Object.keys(alias)">{{ alias[key] }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="row in data">
+              <td v-for="key in Object.keys(alias)">
+                {{ row[key] === null ? "未进行过测试" : row[key] === undefined ? info.filter(a => a.uid === row.uid)[0][key] : row[key] }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  new Vue({
+    el: "#app",
+    data: {
+      status: 0,
+      data: {},
+      alias: {
+        "uid": "序号",
+        "username": "用户名",
+        "realName": "真实姓名",
+        "maxScore": "最高得分",
+        "lastScore": "上次得分",
+      },
+      info: {},
+    },
+    computed: {
+      
+    },
+    mounted: function() {
+      axios.post("/admin/getAllExamScore").then(res => {
+        if (res.status === 200 && res.data.status) {
+          this.status += 0.5;
+          this.data = res.data.data;
+        }
+        else {
+          this.status = -1;
+        }
+      });
+      axios.post("/admin/getAllStudentInfo").then(res => {
+        if (res.status === 200) {
+          this.status += 0.5;
+          this.info = res.data.data;
+          this.info.push({uid: 1, username: "系统管理员", realName: "系统管理员"});
+        }
+        else {
+          this.status = -1;
+        }
+      });
+    },
+    updated: function() {
+      
+    },
+  });
+</script>
+<style scoped>
+  #app {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+  }
+  #app>div {
+    width: 95%;
+  }
+</style>

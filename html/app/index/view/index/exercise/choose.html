@@ -1,0 +1,340 @@
+<div class="content" id="app">
+  <div class="breadcrumb-wrapper">
+    <h1>能力自测</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb p-0">
+            <li class="breadcrumb-item">
+              <span class="mdi mdi-home"></span>
+            </li>
+            <li class="breadcrumb-item">
+                连说带练全把式
+            </li>
+            <li class="breadcrumb-item" aria-current="page">
+              能力自测
+            </li>
+        </ol>
+    </nav>
+  </div>
+  <div v-if="status !== 1" class="sk-wave">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+    <div class="rect5"></div>
+  </div>
+  <div v-if="status === 1" class="card card-default" style="height: calc(100% - 24px);">
+    <div class="card-header card-header-border-bottom">
+        <h2>能力自测</h2>
+    </div>
+    <div style="padding: 3em; display: flex; justify-content: center; width: 100%;" class="card-body">
+      <div style="max-width: 800px; width: 100%; position: relative;">
+        <div v-if="result.answer" class="score">{{ result.score }}分</div>
+        <div style="font-size: 1.3em; font-weight: bold;">单项选择题</div>
+        <div class="question">
+          <div class="desc">
+            <div class="number">{{ i }}</div>
+            {{ data[i - 1].question }}
+          </div>
+          <div class="choices">
+            <div class="choice">
+              <label :class="['control', 'control-radio', choice[i - 1] === 'A' ? 'checked' : '']" @click="next(i, 'A')">
+                {{ data[i - 1].A }}
+              </label>
+            </div>
+            <div class="choice">
+              <label :class="['control', 'control-radio', choice[i - 1] === 'B' ? 'checked' : '']" @click="next(i, 'B')">
+                {{ data[i - 1].B }}
+              </label>
+            </div>
+            <div class="choice">
+              <label :class="['control', 'control-radio', choice[i - 1] === 'C' ? 'checked' : '']" @click="next(i, 'C')">
+                {{ data[i - 1].C }}
+              </label>
+            </div>
+            <div class="choice">
+              <label :class="['control', 'control-radio', choice[i - 1] === 'D' ? 'checked' : '']" @click="next(i, 'D')">
+                {{ data[i - 1].D }}
+              </label>
+            </div>
+          </div>
+        </div>
+        <div v-if="result.answer" class="result">
+          <div :class="'alert ' + (result.answer[i - 1] ? 'alert-success' : 'alert-danger')">
+            <strong>{{ result.answer[i - 1] ? "回答正确！" : "回答错误！" }}</strong><br><br>
+            题目解析：{{ result.resDetail[i - 1] }}
+          </div>
+        </div>
+        <div class="control">
+          <div class="pages">
+            <div v-for="t in data.length" :class="['cb', result.answer ? (result.answer[t - 1] ? 'dui' : 'cuo') : '', t === i ? 'checked' : '']" @click="go(t)">{{ t }}</div>
+          </div>
+          <div v-if="submited === false" class="cb cbb" @click="submit">提交</div>
+          <div v-if="submited === true" class="cb cbb" @click="goon">重新测试</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div v-if="status2 === 1 && data2.length > 0" class="card card-default" style="height: calc(100% - 24px);">
+    <div class="card-header card-header-border-bottom">
+        <h2>错题集</h2>
+    </div>
+    <div class="card-body">
+      <div class="wrongs">
+        <div v-for="data in data2" class="wrong">
+          <div><strong>题目</strong> {{ data.question }}</div>
+          <div><strong>正解</strong> {{ data.correctRes }}</div>
+          <div><strong>解析</strong> {{ data.resDetail }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  new Vue({
+    el: "#app",
+    data: {
+      status: 0,
+      data: {},
+      choice: [],
+      submited: false,
+      result: [],
+      i: 1,
+      status2: 0,
+      data2: {},
+    },
+    methods: {
+      getExam: function() {
+        axios.post("/api/getAnExam").then(res => {
+          if (res.status) {
+            this.status = 1;
+            this.data = res.data;
+            this.choice = [];
+            for (let i = 0; i < this.data.length; ++i) {
+              this.choice.push(0);
+            }
+          }
+          else {
+            this.status = -1;
+          }
+        });
+      },
+      next: function(ni, c) {
+        if (this.submited) return;
+        Vue.set(this.choice, ni - 1, c);
+        if (ni + 1 <= this.data.length && this.choice[ni] === 0) {
+          this.i = ni + 1;
+        }
+      },
+      go: function(t) {
+        this.i = t;
+      },
+      submit: function() {
+        for (let i = 0; i < this.data.length; ++i) {
+          if (this.choice[i] === 0) {
+            toastr.error("第" + (i + 1) + "题还没做呢！");
+            return;
+          }
+        }
+        this.submited = true;
+        axiosPostFormdata("/api/judgeExam", this.choice).then(res => {
+          if (res.status === 200) {
+            toastr.success("提交成功！");
+            this.result = res.data;
+          }
+          else {
+            toastr.success("提交失败！");
+            this.submited = false;
+          }
+        });
+      },
+      goon: function() {
+        reloadPage();
+      },
+    },
+    computed: {
+      
+    },
+    mounted: function() {
+      this.getExam();
+      axios.post("/api/getMyWrongTitleSet").then(res => {
+        if (res.status === 200) {
+          this.status2 = 1;
+          this.data2 = res.data;
+        }
+        else {
+          this.status2 = -1;
+        }
+      });
+    },
+    updated: function() {
+      
+    },
+  });
+</script>
+<style scoped>
+  #app {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+  }
+  #app>div {
+    width: 95%;
+  }
+  .question {
+    margin-top: 3em;
+  }
+  .desc {
+    padding: 6em 4em;
+    font-size: 1.2em;
+    background-color: #B0E0E622;
+    line-height: 1.2em;
+    border-radius: 1em;
+    color: black;
+    position: relative;
+  }
+  .desc::after,
+  .desc::before {
+    font-size: 8em;
+    position: absolute;
+    color: #B0E0E6;
+  }
+  .desc::before {
+    content: '“';
+    left: 0;
+    top: 0;
+    transform: translate(30px, 80px);
+  }
+  .desc::after {
+    content: '”';
+    right: 0;
+    bottom: 0;
+    transform: translate(-30px, 0);
+  }
+  .number {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, -50%);
+    background-color: gold;
+    border-radius: 0.5em;
+    width: 2em;
+    height: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    color: white;
+  }
+  .choices {
+    width: 100%;
+    padding: 0;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin-top: 1em;
+  }
+  .choice {
+    width: 45%;
+    margin: 0.5em;
+    display: inline-block;
+  }
+  .choice label {
+    padding: 1.5em;
+    margin: 0;
+    background-color: #eeeeee;
+    border-radius: 1em;
+    font-size: 1.1em;
+    transition: 0.3s ease-in-out;
+  }
+  .choice label:hover,
+  .choice label.checked {
+    color: white;
+  }
+  .choice label:hover {
+    background: gold;
+  }
+  .choice label.checked {
+    background: linear-gradient(90deg, gold 60%, red 200%);
+  }
+  .control {
+    padding: 1.5em;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .pages {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+  .cb {
+    background-color: #B0E0E622;
+    font-size: 1.1em;
+    width: 3em;
+    height: 3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5em;
+    border-radius: 1.5em;
+  }
+  .cb.checked,
+  .cb:hover {
+    background-color: gold;
+    color: white;
+  }
+  .cb.dui {
+    box-shadow: 0px 0px 0.5em 0.1em green inset;
+  }
+  .cb.cuo {
+    box-shadow: 0px 0px 0.5em 0.1em red inset;
+  }
+  .cbb {
+    background-color: gold;
+    color: white;
+    width: 5em;
+    height: 5em;
+    border-radius: 2.5em;
+  }
+  .cbb:hover {
+    background: linear-gradient(180deg, gold 40%, red 200%);
+  }
+  .result {
+    margin-top: 1em;
+    padding: 0 2em;
+  }
+  .score {
+    color: gold;
+    font-size: 5em;
+    right: 0;
+    top: 0;
+    font-weight: bold;
+    position: absolute;
+    height: 3em;
+    width: 3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0.2em solid;
+    border-radius: 1.5em;
+  }
+  .wrongs {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+  }
+  .wrong {
+    min-width: 300px;
+    flex: 1 0;
+    padding: 2em;
+    background-color: #B0E0E622;
+    border-radius: 1em;
+    margin: 0.5em;
+  }
+  .wrong div {
+    margin-bottom: 0.5em;
+  }
+  .wrong div:last-child {
+    margin-bottom: 0;
+  }
+</style>

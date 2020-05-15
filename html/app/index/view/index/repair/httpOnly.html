@@ -1,0 +1,96 @@
+<div class="content">
+    <div class="breadcrumb-wrapper">
+        <h1>利用HttpOnly</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb p-0">
+                <li class="breadcrumb-item">
+                    <a href="/">
+                        <span class="mdi mdi-home"></span>
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    修复XSS漏洞
+                </li>
+                <li class="breadcrumb-item" aria-current="page">
+                    利用HttpOnly
+                </li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card card-default">
+                <div class="card-body">
+                    <p>
+                        严格地说, HttpOnly对防御XSS漏洞不起作用,而主要目的是为了解决XSS漏洞后续的Cookie劫持攻击。
+                    </p>
+                    <h4>
+                        <i class="mdi mdi-comment-question"></i>
+                        那么,到底什么是 HttpOnly呢？
+                    </h4>
+                    <p>
+                        HttpOnly是微软公司的 Internet Explorer 6 SP1引入的一项特性。这个特性为 Cookie提供了一个新属性,用以阻止客户端脚本访问
+                        Cookie。至今已经成为一个标准,几乎所有的浏览器都会支持 HttpOnly。
+                    </p>
+                    <h4>
+                        <i class="mdi mdi-book-open-page-variant"></i>
+                        HttpOnly的用处.
+                    </h4>
+                    <p>
+                        一个浏览器可能会向服务器端发送多条Cookie,但是带有 HttpOnly 的
+                        Cookie,JavaScript将不能获取。在身份标识字段使用HttpOnly可以有效地阻挡XSS会话劫持攻击,但却不能够完全阻挡XSS攻击。因为XSS攻击的手段太多:模拟用户“正常”操作、盗取用户信息、钓鱼等,仅靠HttpOnly是不够的,防御的关键还是要靠过滤输入与输出。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card card-default">
+                <div class="card-header card-header-border-bottom">
+                    <h2 class="text-primary">C# 设置HttpOnly</h2>
+                </div>
+                <div class="card-body">
+                    <pre><code class="language-c#">HttpCookie myCookie = new HttpCookie("myCookie");
+myCookie.HttpOnly = true;
+Response.AppendCookie(myCookie);
+</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="card card-default">
+                <div class="card-header card-header-border-bottom">
+                    <h2 class="text-primary">VB.NET 设置HttpOnly</h2>
+                </div>
+                <div class="card-body"><pre><code class="language-vb.net">Dim myCookie As HttpCookie = new HttpCookie ("myCookie")
+myCookie.HttpOnly = True
+Response.AppendCookie(myCookie)
+</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="card card-default">
+                <div class="card-header card-header-border-bottom">
+                    <h2 class="text-primary">PHP 设置HttpOnly</h2>
+                </div>
+                <div class="card-body"><pre><code class="language-php">bool setcookie  ( string $name  [, string $value  [, int $expire= 0  [, string $path  
+                    [, string $domain  [, bool $secure= false  [, bool $httponly= false  ]]]]]] )
+</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="card card-default">
+                <div class="card-header card-header-border-bottom">
+                    <h2 class="text-primary">Python 设置HttpOnly</h2>
+                </div>
+                <div class="card-body"><pre><code class="language-python"></code>tools.sessions.httponly = True
+                </pre></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

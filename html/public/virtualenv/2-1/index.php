@@ -1,0 +1,17 @@
+<p>
+I was hard on people sometimes, probably harder than I needed to be. I remember the time when Reed was six years old, coming home, and I had just fired somebody that day, and I imagined what it was like for that person to tell his family and his young son that he had lost his job. It was hard. But somebody’s got to do it. I figured that it was always my job to make sure that the team was excellent, and if I didn’t do it, nobody was going to do it.You always have to keep pushing to innovate. Dylan could have sung protest songs forever and probably made a lot of money, but he didn’t. He had to move on, and when he did, by going electric in 1965, he alienated a lot of people.
+</p>
+<p>
+His 1966 Europe tour was his greatest. He would come on and do a set of acoustic guitar, and the audiences loved him. Then he brought out what became The Band, and they would all do an electric set, and the audience sometimes booed. There was one point where he was about to sing “Like a Rolling Stone”and someone from the audience yells “Judas!” And Dylan then says, “Play it fucking loud!” And they did. The Beatles were the same way. They kept evolving, moving, refining their art. That’s what I’ve always tried to do—keep moving. Otherwise, as Dylan says, if you’re not busy being born, you’re busy dying.
+
+What drove me? I think most creative people want to express appreciation for being able to take advantage of the work that’s been done by others before us. I didn’t invent the language or mathematics I use. I make little of my own food, none of my own clothes. Everything I do depends on other members of our species and the shoulders that we stand on. And a lot of us want to contribute something back to our species and to add something to the flow.I am 
+<?php
+header("X-XSS-Protection:0");
+$username = $_GET['username'];
+echo $username;
+?>. It’s about trying to express something in the only way that most of us know how—because we can’t write Bob Dylan songs or Tom Stoppard plays. We try to use the talents we do have to express our deep feelings, to show our appreciation of all the contributions that came before us, and to add something to that flow. That’s what has driven me.
+</p>
+
+<p>
+One sunny afternoon, when he wasn’t feeling well, Jobs sat in the garden behind his house and reflected on death. He talked about his experiences in India almost four decades earlier, his study of Buddhism, and his views on reincarnation and spiritual transcendence. “I’m about fifty-fifty on believing in God,” he said. “For most of my life, I’ve felt that there must be more to our existence than meets the eye.” He admitted that, as he faced death, he might be overestimating the odds out of a desire to believe in an afterlife. “I like to think that something survives after you die,” he said. “It’s strange to think that you accumulate all this experience, and maybe a little wisdom, and it just goes away. So I really want to believe that something survives, that maybe your consciousness endures.” He fell silent for a very long time. “But on the other hand, perhaps it’s like an on-off switch,” he said. “Click! And you’re gone.”Then he paused again and smiled slightly. “Maybe that’s why I never liked to put on-off switches on Apple devices.”
+</p>

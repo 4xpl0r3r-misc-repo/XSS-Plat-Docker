@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>跨站脚本教学辅助平台教师端</title>
+  <!-- GOOGLE FONTS -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500"
+    rel="stylesheet" />
+  <link href="https://cdn.bootcss.com/MaterialDesign-Webfont/4.4.95/css/materialdesignicons.min.css" rel="stylesheet" />
+  <!-- PLUGINS CSS STYLE -->
+  <link href="assets/plugins/nprogress/nprogress.css" rel="stylesheet" />
+  <!-- No Extra plugin used -->
+  <link href="assets/plugins/jvectormap/jquery-jvectormap-2.0.3.css" rel="stylesheet" />
+  <link href="assets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" />
+  <link href="assets/plugins/toastr/toastr.min.css" rel="stylesheet" />
+  <link href="assets/plugins/flag-icons/css/flag-icon.min.css" rel="stylesheet">
+  <link href="/myStatic/css/myStyle.css" rel="stylesheet">
+
+  <link href="/myStatic/css/prism.css" rel="stylesheet">
+  <!-- SLEEK CSS -->
+  <link rel="stylesheet" href="assets/css/sleek.css" />
+  <!--
+    HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
+  -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <script src="assets/plugins/nprogress/nprogress.js"></script>
+  <style>
+    * {
+      font-family: "Roboto", 'Open Sans', 'Helvetica Neue', Arial, 'Hiragino Sans GB', 'Microsoft YaHei', 'WenQuanYi Micro Hei', sans-serif !important;
+    }
+
+    @-webkit-keyframes rotation {
+      from {
+        -webkit-transform: rotate(0deg);
+      }
+
+      to {
+        -webkit-transform: rotate(360deg);
+      }
+    }
+
+    .Rotation {
+      -webkit-transform: rotate(360deg);
+      animation: rotation 3s cubic-bezier(1, 0, 0, 1) infinite;
+      -moz-animation: rotation 3s cubic-bezier(1, 0, 0, 1) infinite;
+      -webkit-animation: rotation 3s cubic-bezier(1, 0, 0, 1) infinite;
+      -o-animation: rotation 3s cubic-bezier(1, 0, 0, 1) infinite;
+    }
+  </style>
+  <script>
+    document.onreadystatechange = function () {
+      if (document.readyState == "complete") {
+        $(".loader-overlay").fadeOut();
+      }
+    }
+		//loading
+  </script>
+  <link type="text/css" rel="stylesheet" href="style.css">
+  <script src="vue.js"></script>
+  <script src="axios.min.js"></script>
+  <script src="highcharts/exporting.js"></script>
+  <script src="highcharts/highcharts.js"></script>
+  <script src="highcharts/highcharts-zh_CN.js"></script>
+  <script src="/myStatic/js/util.js"></script>
+</head>
+
+<body class="header-fixed sidebar-fixed sidebar-dark header-light" id="body">
+  <!--loading-->
+  <div class="loader-overlay">
+    <div class="loader">
+      <div id="loader-icon" class="Rotation img">
+        <div class="rect2"></div>
+        <img height="100px" width="100px" src="/myStatic/img/favicon.png">
+      </div>
+      <h3 class="loader-text">Loading</h3>
+    </div>
+  </div>
+  <!--loading-->
+  <script>
+    NProgress.configure({ showSpinner: false });
+    NProgress.start();
+  </script>
+  <div id="toaster"></div>
+  <div class="wrapper">
+    <!--
+          ====================================
+          ——— LEFT SIDEBAR WITH FOOTER
+          =====================================
+        -->
+    <aside class="left-sidebar bg-sidebar" style="margin-top: 3.4rem;">
+      <div id="sidebar" class="sidebar sidebar-with-footer">
+        <!-- begin sidebar scrollbar -->
+        <div class="sidebar-scrollbar">
+          <!-- sidebar menu -->
+          <ul class="nav sidebar-inner" id="sidebar-menu" style="margin-top: 0 ;">
+
+            <li class="has-sub expand">
+              <a class="sidenav-item-link " href="javascript:void(0)" data-toggle="collapse" data-target="#intro"
+                aria-expanded="false" aria-controls="intro">
+                <i class="mdi mdi-shield-key-outline"></i>
+                <span class="nav-text">平台管理</span>
+              </a>
+              <ul class="collapse show" id="intro" data-parent="#sidebar-menu">
+                <div class="sub-menu">
+                  <li>
+                    <a class="sidenav-item-link" href="/progressManage">
+                      <i class="mdi mdi-bookmark-check"></i><span class="nav-text">学习进度管理</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="sidenav-item-link" href="/scores">
+                      <i class="mdi mdi-glassdoor"></i><span class="nav-text">学习成绩管理</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="sidenav-item-link" href="/infoManage">
+                      <i class="mdi mdi-glassdoor"></i><span class="nav-text">学生信息管理</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="sidenav-item-link" href="/QuestionManage">
+                      <i class="mdi mdi-glassdoor"></i><span class="nav-text">测试题目管理</span>
+                    </a>
+                  </li>
+                </div>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+    <div class="page-wrapper">
+      <!-- Header -->
+      <header class="main-header " id="header">
+        <nav class="navbar navbar-static-top navbar-expand-lg">
+          <div id="app-brand">
+            <a href="/progressManage" style="color: whitesmoke !important;">
+              跨站脚本教学辅助平台教师端
+            </a>
+          </div>
+
+          <!-- Sidebar toggle button -->
+          <button id="sidebar-toggler" class="sidebar-toggle" style="color:whitesmoke;padding-left: 0;">
+            <span class="sr-only">Toggle navigation</span>
+          </button>
+          <div class="search-form d-none d-lg-inline-block">
+          </div>
+
+          <div class="navbar-right ">
+            <ul class="nav navbar-nav">
+              <!-- User Account -->
+              <li class="dropdown user-menu">
+                <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                  <span class=" d-none d-lg-inline-block" style="vertical-align: middle;
+                  color: whitesmoke;
+                  font-family: 微软雅黑 !important;
+                  font-size: 1.4em;
+                  text-shadow: grey 1px 1px 3px;
+                  ">{$realName}</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li>
+                    <a id="updateButton" href="" data-toggle="modal" data-target="#updateModalForm">
+                      <i class="mdi mdi-account"></i> 修改密码
+                    </a>
+                  </li>
+                  <li class="dropdown-footer">
+                    <a href="javascript:logout()">
+                      <i class="mdi mdi-logout-variant"></i> 注 销
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <div class="content-wrapper" id="pjax-container">
+        {__CONTENT__}
+      </div>
+      <footer class="footer mt-auto">
+        <div class="copyright bg-white" style="padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        padding-left: 1rem;">
+          <div class="row">
+
+            <div class="col-xl-8" style="display: flex;align-items: center;">
+              Developed by Kano Zhang
+            </div>
+
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <script src="assets/plugins/jquery/jquery.min.js"></script>
+  <script src="assets/plugins/slimscrollbar/jquery.slimscroll.min.js"></script>
+  <!-- <script src="assets/plugins/jekyll-search.min.js"></script> -->
+  <script src="assets/plugins/charts/Chart.min.js"></script>
+  <script src="assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js"></script>
+  <script src="assets/plugins/jvectormap/jquery-jvectormap-world-mill.js"></script>
+  <script src="assets/plugins/daterangepicker/moment.min.js"></script>
+  <script src="assets/plugins/daterangepicker/daterangepicker.js"></script>
+  <script>
+    jQuery(document).ready(function () {
+      jQuery('input[name="dateRange"]').daterangepicker({
+        autoUpdateInput: false,
+        singleDatePicker: true,
+        locale: {
+          cancelLabel: 'Clear'
+        }
+      });
+      jQuery('input[name="dateRange"]').on('apply.daterangepicker', function (ev, picker) {
+        jQuery(this).val(picker.startDate.format('MM/DD/YYYY'));
+      });
+      jQuery('input[name="dateRange"]').on('cancel.daterangepicker', function (ev, picker) {
+        jQuery(this).val('');
+      });
+    });
+  </script>
+  <!-- Update Form Modal -->
+  <div class="modal fade" id="updateModalForm" tabindex="-1" role="dialog" aria-labelledby="updateModalFormTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateModalFormTitle">信息修改面板</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form onsubmit="return modalUpdate()">
+            <div class="form-group">
+              <label for="updatePassword">密码</label>
+              <input type="password" class="form-control" id="updatePassword" placeholder="请输入新密码">
+            </div>
+            <button id="modalUpdateButton" type="submit" class="btn btn-primary btn-square">确认修改</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="display: none;" id="showModal"></button>
+  <!-- 模态框（Modal） -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="updateModalFormTitle">提示</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="myModalContent"> 在这里添加一些文本 </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-primary btn-square" data-dismiss="modal"> 好的 </button>
+              </div>
+          </div><!-- /.modal-content -->
+      </div><!-- /.modal -->
+  </div>
+
+  <script src="assets/plugins/toastr/toastr.min.js"></script>
+  <script src="assets/js/sleek.bundle.js"></script>
+  <script src="/myStatic/js/prism.js"></script>
+  <script src="jquery.pjax.js"></script>
+</body>
+<script> 
+  function initial() {
+    refreshNavbar();
+  }
+  function refreshNavbar() {
+    var navItems = document.querySelectorAll(".sidenav-item-link");
+    var pathname = location.pathname;
+    for (var navItem of navItems) {
+      if (navItem.href.endsWith(pathname)) $(navItem).css("color", "gold");
+      else $(navItem).css("color", "#b7c0cd");
+    }
+  }
+  $(document).pjax('a[target!="_blank"]', '#pjax-container', {fragment:'#pjax-container', timeout:8000}); 
+  $(document).on('pjax:end', () => {
+    initial();
+  });
+  $(document).on('pjax:beforeSend', () => {
+    $('video').each(function() {
+      $(this).remove();
+    });
+  });
+  initial();
+ </script>
+</html>
+
+
+<!--useful-->

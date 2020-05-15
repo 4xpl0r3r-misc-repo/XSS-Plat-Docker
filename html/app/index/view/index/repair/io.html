@@ -1,0 +1,139 @@
+<div class="content">
+    <div class="breadcrumb-wrapper">
+        <h1>输入与输出</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb p-0">
+                <li class="breadcrumb-item">
+                    <a href="/">
+                        <span class="mdi mdi-home"></span>
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    修复XSS漏洞
+                </li>
+                <li class="breadcrumb-item" aria-current="page">
+                    输入与输出
+                </li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card card-default">
+                        <div class="card-header card-header-border-bottom">
+                            <h2>防御的核心</h2>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                在HTML中,<span class="text-primary">&lt;、&gt;、&quot;、&#x27;、&amp;</span>都有比较特殊的意义,因为HTML标签、属性就是由这几个符号组成的。如果直接输出这几个特殊字符,极有可能破坏整个HTML文档的结构。所以一般情况下,将这些特殊字符转义就可以避免XSS漏洞。过滤字符并不难，但是一定要做到所有输入输出的点进行检查，<strong
+                                    style="color: red;">千里之堤毁于蚁穴！！！</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="card card-default">
+                        <div class="card-header card-header-border-bottom">
+                            <h2>前端防御</h2>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                在前端Js操作中,目前没有原生的规避XSS的方法，可以自己制作一个类似的函数，把所有特殊的字符转换为实体字符即可
+                            </p>
+                            <p>
+                                下面提供一个过滤函数以供参考
+                            </p>
+                            <pre><code class="language-js">function escapeHtml(value) {
+    if (typeof value !== &#x27;string&#x27;) {
+        return value
+    }
+    return value.replace(/[&amp;&lt;&gt;&#x60;&quot;&#x27;\/]/g, function(result) {
+        return {
+        &#x27;&amp;&#x27;: &#x27;&amp;amp;&#x27;,
+        &#x27;&lt;&#x27;: &#x27;&amp;lt;&#x27;,
+        &#x27;&gt;&#x27;: &#x27;&amp;gt;&#x27;,
+        &#x27;&#x60;&#x27;: &#x27;&amp;#x60;&#x27;,
+        &#x27;&quot;&#x27;: &#x27;&amp;quot;&#x27;,
+        &quot;&#x27;&quot;: &#x27;&amp;#x27;&#x27;,
+        &#x27;/&#x27;: &#x27;&amp;#x2f;&#x27;,
+        }[result]
+    })
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-xl-6">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card card-default">
+                        <div class="card-header card-header-border-bottom">
+                            <h2>后端防御-PHP</h2>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                在所有输入输出点使用<code class="language-php">
+                                htmlspecialchars();
+                                htmlentities();
+                            </code>使特殊字符变成HTML实体。
+                            </p>
+                            <p>
+                                变化如下
+                            </p>
+                            <div>
+                                <p>
+                                    <i class="mdi mdi-rhombus-medium"></i>
+                                    &amp; 成为 &amp;amp;
+                                </p>
+                                <p>
+                                    <i class="mdi mdi-rhombus-medium"></i>
+                                    &#x27; 成为 &amp;#x27;
+                                </p>
+                                <p>
+                                    <i class="mdi mdi-rhombus-medium"></i>
+                                    &lt; 成为 &amp;lt;
+                                </p>
+                                <p>
+                                    <i class="mdi mdi-rhombus-medium"></i>
+                                    &gt; 成为 &amp;gt;
+                                </p>
+                            </div>
+                            <p>
+                                PHP示例代码如下:
+                            </p>
+                            <pre><code class="language-php">&lt;?php
+@$html =$GET[&#x27;xss&#x27;];
+if($html){
+    echo htmlspecialchars($html);
+}
+?&gt;</code></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="card card-default">
+                        <div class="card-header card-header-border-bottom">
+                            <h2>后端防御-Java</h2>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                在以Java作为后端开发语言的Web应用程序中，处理XSS威胁的方法主要是使用第三方组件。
+                            </p>
+                            <p>
+                                支持过滤XSS漏洞第三方组件有非常多,比如 OWASP Esapi、 JSOUP、xssprotect等，只要安装它们的最新版本并保持更新，就能保护您的网站免遭攻击。
+                            </p>
+                            <p>
+                                当然了，您也可以自己写一个类似的过滤函数，然后在<span class="text-primary">每个输入点</span>调用它。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
