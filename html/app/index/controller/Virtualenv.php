@@ -22,7 +22,7 @@ class Virtualenv extends \think\Controller
         parent::__construct();
         config('default_return_type', 'json',);     #非跨域API使用json
         // config('default_return_type', 'jsonp',); #跨域API使用jsonp
-        config('database.database', 'xss-virtualenv');
+        config('database.database', 'xss-platform');
         Db::connect();
         $this->cuCp = $_POST['Cp'];
         $this->tableName = $this->cuCp . '_' . session('username');
@@ -33,7 +33,7 @@ class Virtualenv extends \think\Controller
         if ($res = $this->checkLogon()) return $res; //检查登录状态
         if ($this->cuCp === '2_2') {
             $SQL = <<<sql
-            CREATE TABLE `xss-virtualenv`.`$this->tableName` ( `comment` TEXT NOT NULL ) ENGINE = InnoDB;
+            CREATE TABLE `xss-platform`.`$this->tableName` ( `comment` TEXT NOT NULL ) ENGINE = InnoDB;
             sql;
             $res = Db::query($SQL);
             $SQL = <<<sql

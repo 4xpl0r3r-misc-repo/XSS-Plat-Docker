@@ -19,7 +19,7 @@ return [
     // 用户名
     'username'        => 'root_sql',
     // 密码
-    'password'        => '5431',
+    'password'        => '<mysql_password>',
     // 端口
     'hostport'        => '',
     // 连接dsn
