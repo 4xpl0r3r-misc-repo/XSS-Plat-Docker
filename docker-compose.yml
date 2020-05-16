@@ -11,7 +11,7 @@ services:
     build:
       context: .
       args:
-        MYSQL_USER_PASS : 'fhaw8fgw7961t79g' #设置管理员密码
+        <<: *sql_config
     volumes:
      - ./mysql:/var/lib/mysql
      - ./initPlat.sh:/initPlat.sh
