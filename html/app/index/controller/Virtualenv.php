@@ -33,7 +33,7 @@ class Virtualenv extends \think\Controller
         if ($res = $this->checkLogon()) return $res; //检查登录状态
         if ($this->cuCp === '2_2') {
             $SQL = <<<sql
-            CREATE TABLE `xss-platform`.`$this->tableName` ( `comment` TEXT NOT NULL ) ENGINE = InnoDB;
+            CREATE TABLE `xss-platform`.`$this->tableName` ( `comment` TEXT NOT NULL ) ENGINE = InnoDB charset utf8mb4;
             sql;
             $res = Db::query($SQL);
             $SQL = <<<sql

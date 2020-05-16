@@ -19,6 +19,11 @@ class Index extends \think\Controller
             header("Location: /login/");
             exit;
         }
+        if (session('uid')===1) {
+            $this->assign('isAdmin', True);
+        }else{
+            $this->assign('isAdmin', False);
+        }
         $this->assign('page', $page);
         if (strpos("$page","-")!==false) {
             return view("index/".implode ("/",explode("-",$page)));

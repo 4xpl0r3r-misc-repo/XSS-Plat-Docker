@@ -27,17 +27,11 @@ class Api extends \think\Controller
     public function getAllProgress()
     {
         $iProgress = new modelProgress();
-        if ($res = ($iProgress->where('uid', '>', 1)->select())) {
-            return [
-                'status' => true,
-                'data'  => $res
-            ];
-        } else {
-            return [
-                'status' => false,
-                'data'  => '数据库错误'
-            ];
-        }
+        $res = ($iProgress->where('uid', '>', 1)->select());
+        return [
+            'status' => true,
+            'data'  => $res
+        ];
     }
 
     /**
@@ -47,20 +41,14 @@ class Api extends \think\Controller
     public function getStudyTime()
     {
         $iUser = new modelUser();
-        if ($res = ($iUser->where('uid', '>', 1)->select())) {
-            foreach ($res as $tUser) {
-                unset($tUser->password);
-            }
-            return [
-                'status' => true,
-                'data'  => $res
-            ];
-        } else {
-            return [
-                'status' => false,
-                'data'  => '数据库错误'
-            ];
+        $res = ($iUser->where('uid', '>', 1)->select());
+        foreach ($res as $tUser) {
+            unset($tUser->password);
         }
+        return [
+            'status' => true,
+            'data'  => $res
+        ];
     }
 
     //学生信息
@@ -72,21 +60,15 @@ class Api extends \think\Controller
     public function getAllStudentInfo()
     {
         $iUser = new modelUser();
-        if ($res = ($iUser->where('uid', '>', 1)->select())) {
-            foreach ($res as $tUser) {
-                unset($tUser->password);
-                unset($tUser->lastUpdate);
-            }
-            return [
-                'status' => true,
-                'data'  => $res
-            ];
-        } else {
-            return [
-                'status' => false,
-                'data'  => '数据库错误'
-            ];
+        $res = $iUser->where('uid', '>', 1)->select();
+        foreach ($res as $tUser) {
+            unset($tUser->password);
+            unset($tUser->lastUpdate);
         }
+        return [
+            'status' => true,
+            'data'  => $res
+        ];
     }
 
     /**
@@ -245,17 +227,11 @@ class Api extends \think\Controller
     public function getAllExamScore()
     {
         $iExam = new modelExam();
-        if ($res = $iExam->select()) {
-            return [
-                'status' => true,
-                'data'  => $res
-            ];
-        } else {
-            return [
-                'status' => false,
-                'data'  => '数据库错误'
-            ];
-        }
+        $res = $iExam->select();
+        return [
+            'status' => true,
+            'data'  => $res
+        ];
     }
 
     //选择题学生端接口,利用session
@@ -322,8 +298,8 @@ class Api extends \think\Controller
             //
             $mES = new modelExamStatus();
             if ($SQLres = $mES->where('uid', $uid)
-                    ->where('qid', session('question_' . $i . '_qid'))
-                    ->find()
+                ->where('qid', session('question_' . $i . '_qid'))
+                ->find()
             ) {
                 //修改
                 if (session('question_' . $i . '_correctChoice') != $_POST[$i]) {
@@ -364,17 +340,17 @@ class Api extends \think\Controller
      */
     public function getMyWrongTitleSet()
     { //获取错题集
-        $mES=new modelExamStatus();
-        $SQLres=$mES->where('uid', session('uid'))->order('qid')->column('qid');
-        $res=array();
+        $mES = new modelExamStatus();
+        $SQLres = $mES->where('uid', session('uid'))->order('qid')->column('qid');
+        $res = array();
         foreach ($SQLres as $qid) {
-            $mQ=new modelQuestion();
-            $SQLres=$mQ->get($qid);
+            $mQ = new modelQuestion();
+            $SQLres = $mQ->get($qid);
             unset($SQLres["fakeA"]);
             unset($SQLres["fakeB"]);
             unset($SQLres["fakeC"]);
-            array_push($res,$SQLres);
+            array_push($res, $SQLres);
         }
-        return($res);
+        return ($res);
     }
 }

@@ -3,6 +3,7 @@
 <?php
 header("X-XSS-Protection:0");
 $conn = new mysqli('127.0.0.1', 'root_sql', '<mysql_password>', 'xss-platform');
+mysqli_set_charset ($conn,"utf8mb4");
 // Check connection
 if ($conn->connect_error) {
     die("连接失败: " . $conn->connect_error);
