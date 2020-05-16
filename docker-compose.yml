@@ -4,7 +4,7 @@ services:
     ports:
      - "8888:80" #8888可修改为任意想要开放的端口
     environment: &sql_config
-      MYSQL_USER_PASS : 'fhaw8fgw7961t79g' #设置管理员密码
+      MYSQL_USER_PASS : 'xssplatform' #设置数据库管理员密码,默认为xssplatform
       MYSQL_USER_NAME : 'root_sql'
       MYSQL_USER_DB : '`xss-platform`'
       CREATE_MYSQL_BASIC_USER_AND_DB : "true"
