@@ -341,7 +341,7 @@ class Api extends \think\Controller
     public function getMyWrongTitleSet()
     { //获取错题集
         $mES = new modelExamStatus();
-        $SQLres = $mES->where('uid', session('uid'))->order('qid')->column('qid');
+        $SQLres = $mES->where('uid', session('uid'))->where("qcondition",1)->order('qid')->column('qid');
         $res = array();
         foreach ($SQLres as $qid) {
             $mQ = new modelQuestion();
