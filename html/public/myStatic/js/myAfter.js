@@ -8,8 +8,8 @@ const dictOfCheckpointsNumbers = {//因为需要转置所以不能出现重复�
     "3_2": "scan-auto",
     "4_1": "repair-io",
     "4_2": "repair-httpOnly",
-    "5_1": "exercise-actual",
-    "5_2": "exercise-choose",
+    "5_1": "exercise-choose",
+    "5_2": "exercise-errorset",
 }
 var dictOfCheckpoints = {}
 for (let k in dictOfCheckpointsNumbers) {//reverse dict
