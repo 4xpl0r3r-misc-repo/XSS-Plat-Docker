@@ -1,0 +1,98 @@
+<div class="content" id="app">
+  <div class="breadcrumb-wrapper">
+    <h1>能力自测</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb p-0">
+            <li class="breadcrumb-item">
+              <span class="mdi mdi-home"></span>
+            </li>
+            <li class="breadcrumb-item">
+                连说带练全把式
+            </li>
+            <li class="breadcrumb-item" aria-current="page">
+              能力自测
+            </li>
+        </ol>
+    </nav>
+  </div>
+  <div v-if="status !== 1" class="sk-wave">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+    <div class="rect5"></div>
+  </div>
+  <div v-if="status === 1" class="card card-default" style="height: calc(100% - 24px);">
+    <div class="card-header card-header-border-bottom">
+        <h2>错题集</h2>
+    </div>
+    <div v-if="data.length === 0">无错题</div>
+    <div v-if="data.length > 0" class="card-body">
+      <div class="wrongs">
+        <div v-for="data in data" class="wrong">
+          <div><strong>题目</strong> {{ data.question }}</div>
+          <div><strong>正解</strong> {{ data.correctRes }}</div>
+          <div><strong>解析</strong> {{ data.resDetail }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  new Vue({
+    el: "#app",
+    data: {
+      status: 0,
+      data: {},
+    },
+    methods: {
+
+    },
+    computed: {
+      
+    },
+    mounted: function() {
+      axios.post("/api/getMyWrongTitleSet").then(res => {
+        if (res.status === 200) {
+          this.status = 1;
+          this.data = res.data;
+        }
+        else {
+          this.status = -1;
+        }
+      });
+    },
+    updated: function() {
+      
+    },
+  });
+</script>
+<style scoped>
+  #app {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+  }
+  #app>div {
+    width: 95%;
+  }
+  .wrongs {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+  }
+  .wrong {
+    min-width: 300px;
+    flex: 1 0;
+    padding: 2em;
+    background-color: #B0E0E622;
+    border-radius: 1em;
+    margin: 0.5em;
+  }
+  .wrong div {
+    margin-bottom: 0.5em;
+  }
+  .wrong div:last-child {
+    margin-bottom: 0;
+  }
+</style>
