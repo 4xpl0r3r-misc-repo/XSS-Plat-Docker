@@ -84,15 +84,25 @@
   .wrong {
     min-width: 300px;
     flex: 1 0;
-    padding: 2em;
+    padding: 2.5em;
     background-color: #B0E0E622;
-    border-radius: 1em;
-    margin: 0.5em;
+    border-radius: 2em;
+    margin: 1em;
+    border: #B0E0E655 solid 2px;
+    box-shadow: 0px 0px 10px 2px #B0E0E6ff;
+    letter-spacing: 0.1em;
   }
   .wrong div {
     margin-bottom: 0.5em;
   }
   .wrong div:last-child {
     margin-bottom: 0;
+  }
+  .wrong strong {
+    font-size: 1.2em;
+    transition: 0.2s;
+  }
+  .wrong:hover strong {
+    color: #B0E0E6ff;
   }
 </style>

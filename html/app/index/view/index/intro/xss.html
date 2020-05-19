@@ -1,7 +1,20 @@
 <div class="content">
+    <script>
+        function showVideo() {
+            showModalHTMLSelf("<video src='https://obs-a2dd.obs.cn-east-2.myhuaweicloud.com/computerDesign/MG%20anime.mp4' width='100%' controls />", "教学视频", "关闭");
+            setTimeout(function() {
+                var a = setInterval(function() {
+                if (!$("#myModal").hasClass("show")) {
+                    $("#myModalContent").html("");
+                    clearInterval(a);
+                }
+            }, 100);
+            }, 2000);
+        }
+    </script>
     <div class="breadcrumb-wrapper">
         <h1>跨站脚本简介</h1>
-        <button class="btn btn-success btn-video">点我查看本期教学视频</button>
+        <button class="btn btn-success btn-video" onclick="showVideo();">点我查看本期教学视频</button>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb p-0">
                 <li class="breadcrumb-item">

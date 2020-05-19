@@ -46,6 +46,13 @@ function showModalHTML(content) {
   $("#showModal").click();
 }
 
+function showModalHTMLSelf(content, title, button) {
+  $("#myModalContent").html(content);
+  $("#myModalTitle").text(title);
+  $("#myModalButton").text(button);
+  $("#showModal").click();
+}
+
 function axiosPostFormdata(u, o) {
   let fd = new FormData();
   for (let key of Object.keys(o)) {
