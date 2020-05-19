@@ -209,3 +209,10 @@ pre {
 .sidenav-item-link i.mdi {
     margin-right: 5px;
 }
+.admin-table>tbody{
+    text-align: center !important;
+    color: black;
+}
+.admin-table tr:hover{
+    color: darkslateblue !important;
+}

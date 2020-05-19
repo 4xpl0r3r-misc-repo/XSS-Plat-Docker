@@ -29,7 +29,7 @@
     <div class="card-body">
       <div v-if="data.length === 0">无学生</div>
       <div v-if="data.length > 0" class="hoverable-data-table" style="margin-bottom: 25px; background-color: white;">
-        <table class="table table-hover nowrap" style="width:100%;">
+        <table class="table table-hover nowrap admin-table" style="width: 100%;">
           <thead>
             <tr>
               <th v-for="key in Object.keys(alias)">{{ alias[key] }}</th>
