@@ -22,6 +22,7 @@ function clearCookie(name) {
 function logout() {
   $.get({url:'/user/logout',async:false});
   clearCookie("PHPSESSID");
+  clearCookie('virtualEnvStarted');
   window.location.href = "/"
 }
 
