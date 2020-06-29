@@ -39,13 +39,16 @@
                                 存储型跨站脚本攻击的生效方式.
                             </h4>
                             <p>
-                                <span class="text-primary">存储型跨站脚本</span>又被称为持久性跨站脚本,存储型跨站脚本是<span class="text-danger">最危险</span>的一种跨站脚本。
+                                <span class="text-primary">存储型跨站脚本</span>又被称为持久性跨站脚本,存储型跨站脚本是<span
+                                    class="text-danger">最危险</span>的一种跨站脚本。
                             </p>
                             <p>
-                                <span class="text-warning">允许用户存储数据</span>的Web应用程序都可能会出现存储型跨站脚本漏洞,当攻击者提交一段跨站脚本代码后,被服务器端接收并存储,当攻击者再次访问某个页面时,这段跨站脚本代码被程序读出来响应给浏览器,造成跨站脚本攻击,这就是存储型跨站脚本。
+                                <span
+                                    class="text-warning">允许用户存储数据</span>的Web应用程序都可能会出现存储型跨站脚本漏洞,当攻击者提交一段跨站脚本代码后,被服务器端接收并存储,当攻击者再次访问某个页面时,这段跨站脚本代码被程序读出来响应给浏览器,造成跨站脚本攻击,这就是存储型跨站脚本。
                             </p>
                             <p>
-                                存储型XSS与反射型XSS、DOM型XSS相比,具有<span class="text-danger">更高的隐蔽性,危害性也更大</span>。它们间最大的区别在于反射型XSS与DOM型XSS执行都必须依靠用户手动去触发,而存储型XSS却不需要。
+                                存储型XSS与反射型XSS、DOM型XSS相比,具有<span
+                                    class="text-danger">更高的隐蔽性,危害性也更大</span>。它们间最大的区别在于反射型XSS与DOM型XSS执行都必须依靠用户手动去触发,而存储型XSS却不需要。
                             </p>
                             <h4>
                                 <i class="mdi mdi-cube-send"></i>
@@ -70,11 +73,34 @@
                                     提交一段内容如下的留言，回到查看留言页面,即可触发漏洞。
                                 </p>
                                 <p>
-                                    <code class="language-html">&lt;script&gt;alert(&quot;XSS Attack!&quot;)&lt;/script&gt;</code>
+                                    <code
+                                        class="language-html">&lt;script&gt;alert(&quot;XSS Attack!&quot;)&lt;/script&gt;</code>
                                 </p>
                                 <p>
                                     大家可能发现了，这里和前几课里不一样，使用了双引号而不是单引号，如果后端使用了双引号，这里就需要用单引号，总之在检测时两种引号都应该尝试一下。
                                 </p>
+                                <h4>
+                                    <i class="mdi mdi-sword-cross"></i>
+                                    拓展练习
+                                    <h4>
+                                        <i class="mdi mdi-sword-cross"></i>
+                                        拓展练习
+                                    </h4>
+                                    <p>
+                                        1.构造URL跳转
+                                    </p>
+                                    <p>
+                                        2.进行页面重构
+                                    </p>
+                                    <hr>
+                                    <p>
+                                        小提示 —— URL页面跳转(js代码)：<br>
+                                    </p>
+                                    <pre><code class="language-javascript">document&period;location&equals;&quot;https&colon;&sol;&sol;www&period;baidu&period;com&quot;</code></pre>
+                                    <p>
+                                        小提示 —— 页面重构(js代码)：
+                                    </p>
+                                    <pre><code class="language-javascript">document&period;body&period;innerHTML &equals; &quot;&lt;h1&gt;you&apos;re hacked&lt;&sol;h1&gt;&quot;&semi;</code></pre>
                             </div>
                         </div>
                     </div>
@@ -90,7 +116,8 @@
                         </div>
                         <div class="card-body">
                             <p>
-                                攻击者将带有XSS代码的留言提交到数据库,当用户查看这段留言时,浏览器会把XSS攻击代码认为是正常的JavaScript代码来执行。这个流程<span class="text-warning">不需要受害用户进行任何特定操作（如打开特定URL）</span>。所以，存储型XSS具有更高的隐蔽性和危害性。
+                                攻击者将带有XSS代码的留言提交到数据库,当用户查看这段留言时,浏览器会把XSS攻击代码认为是正常的JavaScript代码来执行。这个流程<span
+                                    class="text-warning">不需要受害用户进行任何特定操作（如打开特定URL）</span>。所以，存储型XSS具有更高的隐蔽性和危害性。
                             </p>
                             <h4>
                                 <i class="mdi mdi-cube-scan"></i>
@@ -100,7 +127,8 @@
                                 在测试是否存在XSS时,首先要确定输入点与输出点。例如,我们要在留言内容上测试XSS漏洞,首先就要去寻找留言内容输出(显示)的地方是在标签内还是在标签属性内,或者在其他地方。如果输出的数据在属性内,那么XSS代码是不会被执行的。
                             </p>
                             <p>
-                                如<code class="language-html">&lt;input type=&quot;text&quot; name=&quot;content&quot; value=&quot;&lt;script&gt;alert(1)&lt;/script&gt;&quot;/&gt;</code>
+                                如<code
+                                    class="language-html">&lt;input type=&quot;text&quot; name=&quot;content&quot; value=&quot;&lt;script&gt;alert(1)&lt;/script&gt;&quot;/&gt;</code>
                             </p>
                             <p>
                                 以上JavaScript代码虽然成功地插入到了HTML中,但却无法执行,因为XSS代码出现在Value属性中,被当作值来处理,最终浏览器解析HTML时,将会把数据以文本的形式输出在网页中。
@@ -115,10 +143,12 @@
                                 最终在HTML文档中为
                             </p>
                             <p>
-                                <code class="language-html">&lt;input type=&quot;text&quot; name=&quot;content&quot; value=&quot;&quot;/ &gt;&lt;script&gt;alert(1)&lt;/script&gt;&quot;/&gt;</code>
+                                <code
+                                    class="language-html">&lt;input type=&quot;text&quot; name=&quot;content&quot; value=&quot;&quot;/ &gt;&lt;script&gt;alert(1)&lt;/script&gt;&quot;/&gt;</code>
                             </p>
                             <p>
-                                这样就可以<span class="text-primary">闭合input标签</span>,使输出的内容<span class="text-primary">不在value属性中</span>,从而造成XSS漏洞。
+                                这样就可以<span class="text-primary">闭合input标签</span>,使输出的内容<span
+                                    class="text-primary">不在value属性中</span>,从而造成XSS漏洞。
                             </p>
                             </p>
                         </div>
@@ -136,7 +166,8 @@
                             $("html").append('<div id="video" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; display: flex; justify-content: center; align-items: center; background-color: rgba(0, 0, 0, 0.8); z-index: 100; flex-flow: column nowrap;"><video src="https://obs-a2dd.obs.cn-east-2.myhuaweicloud.com/computerDesign/存储型.mp4" style="max-width: 75%; max-height: 70%;" controls /><button class="btn btn-primary" onclick="$(\'#video\').remove();" style="width: 100px; margin-top: 30px;">关闭</button></div>');
                         }
                     </script>
-                    <button class="btn btn-success btn-video" onclick="showVideo();" style="margin: -10px 0; margin-left: auto; ">点我查看本期教学视频</button>
+                    <button class="btn btn-success btn-video" onclick="showVideo();"
+                        style="margin: -10px 0; margin-left: auto; ">虚拟实验操作演示</button>
                 </div>
                 <div class="card-body">
                     <!-- /virtualenv/2-2/ -->

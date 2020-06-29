@@ -69,6 +69,25 @@
                             在地址栏中将参数username改为<code
                                 class="language-html">&lt;script&gt;alert(&#x27;XSS Attack!&#x27;)&lt;/script&gt;</code>即可触发XSS漏洞，发生弹窗。
                         </p>
+                        <h4>
+                            <i class="mdi mdi-sword-cross"></i>
+                            拓展练习
+                        </h4>
+                        <p>
+                            1.构造URL跳转
+                        </p>
+                        <p>
+                            2.进行页面重构
+                        </p>
+                        <hr>
+                        <p>
+                            小提示 —— URL页面跳转(js代码)：<br>
+                        </p>
+                        <pre><code class="language-javascript">document&period;location&equals;&quot;https&colon;&sol;&sol;www&period;baidu&period;com&quot;</code></pre>
+                        <p>
+                            小提示 —— 页面重构(js代码)：
+                        </p>
+                        <pre><code class="language-javascript">document&period;body&period;innerHTML &equals; &quot;&lt;h1&gt;you&apos;re hacked&lt;&sol;h1&gt;&quot;&semi;</code></pre>
                     </div>
 
                 </div>
@@ -83,7 +102,7 @@
                             $("html").append('<div id="video" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; display: flex; justify-content: center; align-items: center; background-color: rgba(0, 0, 0, 0.8); z-index: 100; flex-flow: column nowrap;"><video src="https://obs-a2dd.obs.cn-east-2.myhuaweicloud.com/computerDesign/反射型.mp4" style="max-width: 75%; max-height: 70%;" controls /><button class="btn btn-primary" onclick="$(\'#video\').remove();" style="width: 100px; margin-top: 30px;">关闭</button></div>');
                         }
                     </script>
-                    <button class="btn btn-success btn-video" onclick="showVideo();" style="margin: -10px 0; margin-left: auto; ">点我查看本期教学视频</button>
+                    <button class="btn btn-success btn-video" onclick="showVideo();" style="margin: -10px 0; margin-left: auto; ">虚拟实验操作演示</button>
                 </div>
                 <div class="card-body">
                     <h4>
