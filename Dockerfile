@@ -1,4 +1,4 @@
-FROM mattrayner/lamp:latest-1804
+FROM mattrayner/lamp:latest-1604
 COPY html /var/www/myApp
 ARG MYSQL_USER_PASS
 RUN sed -i "4c DocumentRoot /var/www/myApp/public"  /etc/apache2/sites-enabled/000-default.conf \
